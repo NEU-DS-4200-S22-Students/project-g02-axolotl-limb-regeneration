@@ -1,14 +1,14 @@
 // Pulling all data from the csv file
-d3.csv('data/limb_regeneration.csv').then(dotPlot);
+d3.csv('data/modified_pc.csv').then(dotPlot);
 
 // Creating a function to create dot plot
 function dotPlot(data) {
   // finding the minimum and maximum percent change values for axis formatting
-  // let minChange = d3.min(data, function(d) {return d.percent_change; });
+  let minChange = d3.min(data, function(d) {return d.percent_change; });
   let maxChange = d3.max(data, function(d) {return d.percent_change; });
 
-  // console.log(minChange);
-  // console.log(maxChange);
+  console.log(minChange); // why is this min broken :(
+  console.log(maxChange);
 
   // creating an svg group for all of the dot plot elements
   let chartGroup = svg
@@ -17,7 +17,7 @@ function dotPlot(data) {
 
   // creating a scale for the x axis
   let xScale = d3.scaleLinear()
-    .domain([-0.8, maxChange])
+    .domain([-3.5, 3])
     .range([0, width - margin.left -margin.right]);
 
   // creating an x axis based on the xScale
@@ -25,8 +25,12 @@ function dotPlot(data) {
   chartGroup
     .append('g')
       .attr('class', 'x axis')
-      .attr('transform', 'translate(30, 200)')
+      .attr('transform', 'translate(0, 250)')
     .call(xAxis)
+
+  // adding a divergent color scale
+  let colors = d3.scaleSequential(d3.interpolateRdBu)
+    .domain([-2.5, 2.5])
 
   // creating dots on the plot
   chartGroup 
@@ -35,8 +39,26 @@ function dotPlot(data) {
     .enter()
     .append('circle')
       .attr('cx', d => xScale(d.percent_change))
-      .attr('cy', function(d) {return 180 - ((d.key % 95) * 2) })
-      .attr('r', 1);
+      .attr('cy', function(d) {return 230 - ((d.key % 95) * 2) })
+      .attr('r', 3)
+      .style('stroke', 'grey')
+      .attr('fill', function(d) {return colors(d.percent_change)});
+
+  // creating a chart title 
+  chartGroup
+    .append('text')
+      .attr('x', width/2)
+      .attr('y', 20)
+      .attr('class', 'chartTitle')
+      .text('Maximum Percent Change in Gene Expression Relative to Day 0');
+
+  // creating x axis label
+  chartGroup
+    .append('text')
+      .attr('x', width/2)
+      .attr('y', 290)
+      .style('text-anchor', 'middle')
+      .text('Percent Change');
 }
 
 let margin = {
