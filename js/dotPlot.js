@@ -50,7 +50,7 @@ function dotPlot(data) {
       .attr('x', width/2)
       .attr('y', 20)
       .attr('class', 'chartTitle')
-      .text('Maximum Percent Change in Gene Expression Relative to Day 0');
+      .text('Greatest Change in Gene Expression Relative to Day 0');
 
   // creating x axis label
   chartGroup
@@ -58,7 +58,7 @@ function dotPlot(data) {
       .attr('x', width/2)
       .attr('y', 290)
       .style('text-anchor', 'middle')
-      .text('Percent Change');
+      .text('Relative Change');
 }
 
 let margin = {
