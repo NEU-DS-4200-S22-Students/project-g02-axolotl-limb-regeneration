@@ -38,11 +38,17 @@ function dotPlot(data) {
       .data(data)
     .enter()
     .append('circle')
+      .attr('id', function(d) {
+        return 'g' + d.key;
+      })
       .attr('cx', d => xScale(d.percent_change))
       .attr('cy', function(d) {return 230 - ((d.key % 95) * 2) })
       .attr('r', 3)
       .style('stroke', 'grey')
-      .attr('fill', function(d) {return colors(d.percent_change)});
+      .attr('fill', function(d) {return colors(d.percent_change)})
+      .on('click', function(_){
+        d3.select(this).classed('selected', true);
+      });
 
   // creating a chart title 
   chartGroup

@@ -26,6 +26,12 @@ h1, h2, h3 {
   background-color: #f4f1f0;
 }
 
+circle.selected {
+	fill: magenta;
+	stroke: purple;
+	opacity: 0.5;
+}
+
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
 #forkongithub a{
 	background:#00F;
