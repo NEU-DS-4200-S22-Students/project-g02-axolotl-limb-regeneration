@@ -1,13 +1,13 @@
 // Pulling all data from the csv file
-d3.csv('data/modified_pc.csv').then(dotPlot);
+d3.csv('data/LFC_transformed.csv').then(dotPlot);
 
 // Creating a function to create dot plot
 function dotPlot(data) {
   // finding the minimum and maximum percent change values for axis formatting
-  let minChange = d3.min(data, function(d) {return d.percent_change; });
-  let maxChange = d3.max(data, function(d) {return d.percent_change; });
+  let minChange = d3.min(data, function(d) {return d.LFC; });
+  let maxChange = d3.max(data, function(d) {return d.LFC; });
 
-  console.log(minChange); // why is this min broken :(
+  console.log(minChange); // why is this min STILL broken :(
   console.log(maxChange);
 
   // creating an svg group for all of the dot plot elements
@@ -17,7 +17,7 @@ function dotPlot(data) {
 
   // creating a scale for the x axis
   let xScale = d3.scaleLinear()
-    .domain([-3.5, 3])
+    .domain([-12, 8])
     .range([0, width - margin.left -margin.right]);
 
   // creating an x axis based on the xScale
@@ -30,7 +30,7 @@ function dotPlot(data) {
 
   // adding a divergent color scale
   let colors = d3.scaleSequential(d3.interpolateRdBu)
-    .domain([-2.5, 2.5])
+    .domain([-8, 8])
 
   // creating dots on the plot
   chartGroup 
@@ -41,11 +41,11 @@ function dotPlot(data) {
       .attr('id', function(d) {
         return 'g' + d.key;
       })
-      .attr('cx', d => xScale(d.percent_change))
+      .attr('cx', d => xScale(d.LFC))
       .attr('cy', function(d) {return 230 - ((d.key % 95) * 2) })
       .attr('r', 3)
       .style('stroke', 'grey')
-      .attr('fill', function(d) {return colors(d.percent_change)})
+      .attr('fill', function(d) {return colors(d.LFC)})
       .on('click', function(_){
         d3.select(this).classed('selected', true);
       });
@@ -56,7 +56,7 @@ function dotPlot(data) {
       .attr('x', width/2)
       .attr('y', 20)
       .attr('class', 'chartTitle')
-      .text('Greatest Change in Gene Expression Relative to Day 0');
+      .text('Log Fold Change in Gene Expression Relative to Day 0');
 
   // creating x axis label
   chartGroup
@@ -64,7 +64,7 @@ function dotPlot(data) {
       .attr('x', width/2)
       .attr('y', 290)
       .style('text-anchor', 'middle')
-      .text('Relative Change');
+      .text('LFC');
 }
 
 let margin = {
