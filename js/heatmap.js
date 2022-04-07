@@ -13,7 +13,7 @@ bottom: 20
   height = 500 - margin.top - margin.bottom;
 
 // function that creates the heatmap 
-function dotPlot(data) {
+function heatmap(data) {
 // creating an svg group for all of the heatmap elements
   let chartGroup = svg
     .append('g')
@@ -27,7 +27,7 @@ let x = d3.scaleBand()
   .range([0, width])
   .domain(xLabels);
 
-svg.append('g')
+chartGroup.append('g')
     .attr('transform', 'translate(0, ' + height)
     .call(d3.axisBottom(x));
 
@@ -36,8 +36,8 @@ let y = d3.scaleBand()
     .range([height, 0])
     .domain(data); 
 
-svg.append('g')
-    .attr('transform', 'translate(0, ' + height)
+chartGroup.append('g')
+    .attr('transform', 'translate('+ height +', 0)')
     .call(d3.axisLeft(y));
 
 // color scale from: https://github.com/d3/d3-scale-chromatic
@@ -45,15 +45,18 @@ let colors = d3.scaleSequential(d3.interpolateBrBG)
     .domain([-1, 1]);
 
 // used https://d3-graph-gallery.com/graph/heatmap_style.html as reference
-svg.selectAll('rectangle')
-        .data(data)
+chartGroup.selectAll('rectangle')
+        .data(data, function(d) {return d.xLabels + ':' + d.percent_change})
     .enter()
     .append('rectangle')
     .attr('x', function(d) {return x(d.xLabels)})
-    // not sure what y attribute is here
-    // .attr('y', function(d) {return y(d.)})
-    .attr('rx', 4)
-    .attr('ry', 4);
+    .attr('y', function(d) {return y(d.percent_change)})
+    .attr('rx', 5)
+    .attr('ry', 5)
+    .attr('width', 20)
+    .attr('height', 20)
+    .style('fill', function(d){return colors(d.percent_change)});
+
 
 
 
