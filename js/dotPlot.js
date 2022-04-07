@@ -3,6 +3,25 @@ d3.csv('data/LFC_transformed.csv').then(dotPlot);
 
 // Creating a function to create dot plot
 function dotPlot(data) {
+
+  // defining margins
+  let margin = {
+    top: 60,
+    left: 50,
+    right: 30,
+    bottom: 35
+  },
+  width = 1000,
+  height = 1000;
+
+
+  let svg = d3.select('#vis-svg-1')
+    .append('svg')
+    .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of its parent element and the page.
+    .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
+    .style('background-color', '#ccc') // change the background color to light gray
+    .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
+
   // finding the minimum and maximum percent change values for axis formatting
   let minChange = d3.min(data, function(d) {return d.LFC; });
   let maxChange = d3.max(data, function(d) {return d.LFC; });

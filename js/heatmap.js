@@ -3,14 +3,14 @@ d3.csv('data/modified_pc.csv').then(heatmap);
 
 // Based on Mike Bostock's margin convention
 // https://bl.ocks.org/mbostock/3019563
-let margin = {
-top: 60,
-left: 50,
-right: 30,
-bottom: 20
-  },
-  width = 500 - margin.left - margin.right,
-  height = 500 - margin.top - margin.bottom;
+// let margin = {
+// top: 60,
+// left: 50,
+// right: 30,
+// bottom: 20
+//   },
+//   width = 500 - margin.left - margin.right,
+//   height = 500 - margin.top - margin.bottom;
 
 // function that creates the heatmap 
 function heatmap(data) {
