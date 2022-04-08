@@ -2,6 +2,15 @@
 // variables and prevent 
 ((() => {
 
-  console.log('Hello, world!');
+  d3.csv('data/LFC_transformed.csv').then(data => {
+
+    let dispatch = d3.dispatch('dotToLine');
+
+    let dotVis = dotPlot(data)
+      .selectionDispatcher(dispatch);
+    let lineVis = lineChart(data['1']);
+
+    dotVis.selectionDispatcher().on('dotToLine', lineVis.updateSelection);
+  });
 
 })());

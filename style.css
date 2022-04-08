@@ -32,6 +32,15 @@ circle.selected {
 	opacity: 0.5;
 }
 
+path.selected {
+  fill: none;
+  stroke: green;
+  stroke-width: 2;
+}
+path.notselected {
+  stroke: blue;
+}
+
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
 #forkongithub a{
 	background:#00F;

@@ -1,6 +1,6 @@
 // Pulling all data from the csv file
-d3.csv('data/LFC_transformed.csv').then(dotPlot);
-
+//d3.csv('data/LFC_transformed.csv').then(dotPlot);
+let dispatcher;
 // Creating a function to create dot plot
 function dotPlot(data) {
 
@@ -14,6 +14,7 @@ function dotPlot(data) {
   width = 1000,
   height = 1000;
 
+  //function chart(data) {
 
   let svg = d3.select('#vis-svg-1')
     .append('svg')
@@ -58,7 +59,7 @@ function dotPlot(data) {
     .enter()
     .append('circle')
       .attr('id', function(d) {
-        return 'g' + d.key;
+        return d.key;
       })
       .attr('cx', d => xScale(d.LFC))
       .attr('cy', function(d) {return 230 - ((d.key % 95) * 2) })
@@ -67,6 +68,7 @@ function dotPlot(data) {
       .attr('fill', function(d) {return colors(d.LFC)})
       .on('click', function(_){
         d3.select(this).classed('selected', true);
+        dispatcher.call('dotToLine', this, this.__data__);
       });
 
   // creating a chart title 
@@ -84,21 +86,17 @@ function dotPlot(data) {
       .attr('y', 290)
       .style('text-anchor', 'middle')
       .text('LFC');
+ // return chart;
+//}
+/*
+chart.selectionDispatcher = function (_) {
+  if (!arguments.length) return dispatcher;
+  dispatcher = _;
+  return chart;
+}*/
+return dotPlot;
 }
-
-let margin = {
-    top: 60,
-    left: 50,
-    right: 30,
-    bottom: 35
-  },
-  width = 1000,
-  height = 1000;
-
-
-let svg = d3.select('#vis-svg-1')
-  .append('svg')
-  .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of its parent element and the page.
-  .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
-  .style('background-color', '#ccc') // change the background color to light gray
-  .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
+dotPlot.selectionDispatcher = function (_) {
+  if (!arguments.length) return dispatcher;
+  dispatcher = _;
+  return dotPlot;}
