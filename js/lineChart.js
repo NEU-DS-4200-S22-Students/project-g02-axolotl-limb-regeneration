@@ -1,19 +1,11 @@
 // Pulling all data from the csv file
 //d3.csv('data/modified_pc.csv').then(lineChart);
 
-key = "1";
-let line;
+let xLabels = ['D0', 'D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
+'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28'];
+let yScale, line, chartGroup;
+
 function lineChart(data) {
-
-  // creating a list to hold the average values for each day
-  let xLabels = ['D0', 'D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
-  'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28'];
-
-  var xy = []; // start empty, add each element one at a time
-for(var i = 0; i < xLabels.length; i++ ) {
-   xy.push({x: xLabels[i], y: data[xLabels[i]]});
-}
-
   // defining margins
   let margin = {
       top: 60,
@@ -25,7 +17,7 @@ for(var i = 0; i < xLabels.length; i++ ) {
     height = 1000;
 
   //function chart(data) {
-   let svg = d3.select('#vis-svg-1')
+  let svg = d3.select('#vis-svg-1')
       .append('svg')
       .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of its parent element and the page.
       .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
@@ -33,7 +25,7 @@ for(var i = 0; i < xLabels.length; i++ ) {
       .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
 
    // creating an svg group to hold the chart elements
-   let chartGroup = svg
+   chartGroup = svg
     .append('g')
       .attr('transform', 'translate(' + margin.left +', ' + height/3 + margin.top + ')');
 
@@ -52,21 +44,23 @@ for(var i = 0; i < xLabels.length; i++ ) {
 
 
    // creating a y scale
-   let yScale = d3.scaleLinear()
-    .domain([0, 15])
+   yScale = d3.scaleLinear()
+    .domain([0, 0])
     .range([height/3, 0]);
 
    // drawing y axis
    let yAxis = chartGroup.append('g')
+    .attr('class', 'y axis')
     .call(d3.axisLeft(yScale));
 
-    let slice = d3.line()
+    line = d3.line()
+      .curve(d3.curveMonotoneX)
       .x(function(d){return xScale(d.x);})
       .y(function(d){return yScale(d.y);});
     
-    line = chartGroup.append('path')
+    chartGroup.append('path')
       .attr('class', 'line')
-      .attr('d', slice(xy))
+      .attr('d', line(data))
       .style('fill', 'none')
       .style('stroke', 'black')
       .style('stroke-width', 2);
@@ -77,7 +71,7 @@ for(var i = 0; i < xLabels.length; i++ ) {
       .attr('x', width/3)
       .attr('y', height/3 + 50)
       .style('text-anchor', 'middle')
-      .text('Days After Amputation');
+      .text('Days Since Amputation');
 
     // Adding y axis label
     chartGroup
@@ -86,28 +80,36 @@ for(var i = 0; i < xLabels.length; i++ ) {
       .attr('y', -30)
       .style('text-anchor', 'middle')
       .attr('class', 'ylabel')
-      .text('Log of Gene Expression');
- 
- // return chart;
-  //}
-  /*
-  // Given selected data from another visualization 
-  // select the relevant elements here (linking)
-  chart.updateSelection = function (selectedData) {
-    if (!arguments.length) return;
-      key = selectedData;
-      //lineChart();
-  };*/
-  //return chart;
+      .text('Log Base 2 of Gene Expression');
+
   return lineChart;
 }
+
+function getData(data) {
+  var max = 0;
+  var xy = [];
+  for(var i = 0; i < xLabels.length; i++ ) {
+    yvalue = data[xLabels[i]]
+    xy.push({x: xLabels[i], y: yvalue});
+    if(parseInt(yvalue) > max) {
+      max = parseInt(yvalue);
+    }
+  }
+  return [max, xy]
+}
+
+function render(data) {
+  var [max, newData] = getData(data);
+  yScale.domain([0, max]);
+  var newYAxis = d3.axisLeft(yScale);
+  chartGroup.selectAll('.y.axis').transition().duration(1500).call(newYAxis);
+  var lines = chartGroup.selectAll('.line').data(newData).attr('class', 'line');
+  lines.transition().duration(1500)
+    .attr('d', line(newData))
+    .style('stroke', 'black');
+}
+
 lineChart.updateSelection = function (selectedData) {
   if (!arguments.length) return;
-    key = selectedData;
-    // console.log(key);
-    line.style('stroke', null);
-    let xLabels = ['D0', 'D1', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
-  'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28'];
-
-    lineChart(selectedData);
+    render(selectedData);
 };
