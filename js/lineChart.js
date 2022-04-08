@@ -80,7 +80,7 @@ function lineChart(data) {
       .attr('y', -30)
       .style('text-anchor', 'middle')
       .attr('class', 'ylabel')
-      .text('Log Base 2 of Gene Expression');
+      .text('Relative Gene Expression');
 
   return lineChart;
 }
