@@ -2,7 +2,7 @@
 // variables and prevent 
 ((() => {
 
-  d3.csv('data/LFC_transformed.csv').then(data => {
+  d3.csv('data/limb_regeneration.csv').then(data => {
 
     let dispatch = d3.dispatch('dotToLine');
 

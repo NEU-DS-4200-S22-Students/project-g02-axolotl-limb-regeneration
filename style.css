@@ -104,3 +104,10 @@ path.notselected {
 	font-size: 30px;
 	text-anchor: middle;
 }
+
+/*formatting y label*/
+.ylabel {
+	transform: rotate(270deg);
+}
+
+

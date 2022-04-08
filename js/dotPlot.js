@@ -23,13 +23,6 @@ function dotPlot(data) {
     .style('background-color', '#ccc') // change the background color to light gray
     .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
 
-  // finding the minimum and maximum percent change values for axis formatting
-  let minChange = d3.min(data, function(d) {return d.LFC; });
-  let maxChange = d3.max(data, function(d) {return d.LFC; });
-
-  console.log(minChange); // why is this min STILL broken :(
-  console.log(maxChange);
-
   // creating an svg group for all of the dot plot elements
   let chartGroup = svg
     .append('g')
