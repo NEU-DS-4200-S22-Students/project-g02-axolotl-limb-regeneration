@@ -8,45 +8,45 @@ let yScale, line, chartGroup;
 function lineChart(data) {
   // defining margins
   let margin = {
-      top: 60,
-      left: 50,
-      right: 30,
-      bottom: 35
+      top: 0,
+      left: 60,
+      right: 0,
+      bottom: 45
     },
-    width = 1000,
-    height = 1000;
+    width = 700,
+    height = 350;
 
   //function chart(data) {
-  let svg = d3.select('#vis-svg-1')
+  let svg = d3.select('#line')
       .append('svg')
       .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of its parent element and the page.
       .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
-      .style('background-color', '#ccc') // change the background color to light gray
+      .style('background-color', 'white') // change the background color to light gray
       .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
 
    // creating an svg group to hold the chart elements
    chartGroup = svg
     .append('g')
-      .attr('transform', 'translate(' + margin.left +', ' + height/3 + margin.top + ')');
+      .attr('transform', 'translate(' + margin.left +', ' + margin.top + ')');
 
    // creating a scale for the x axis
    let xScale = d3.scaleBand()
     .domain(xLabels)
-    .range([0, (width - margin.left - margin.right)*2/3])
+    .range([0, (width)])
     .padding(0.5);
  
    // drawing x axis
    let xAxis = d3.axisBottom(xScale)
    chartGroup
     .append('g')
-      .attr('transform', 'translate(0,' + (height/3) + ')')
+      .attr('transform', 'translate(0,' + (height) + ')')
     .call(xAxis)
 
 
    // creating a y scale
    yScale = d3.scaleLinear()
     .domain([0, 0])
-    .range([height/3, 0]);
+    .range([height, 0]);
 
    // drawing y axis
    let yAxis = chartGroup.append('g')
@@ -68,16 +68,16 @@ function lineChart(data) {
     // Adding x axis label
     chartGroup
     .append('text')
-      .attr('x', width/3)
-      .attr('y', height/3 + 50)
+      .attr('x', (width + margin.left) / 2)
+      .attr('y', height + 35)
       .style('text-anchor', 'middle')
       .text('Days Since Amputation');
 
     // Adding y axis label
     chartGroup
     .append('text')
-      .attr('x', -150)
-      .attr('y', -30)
+      .attr('x', -height/2)
+      .attr('y', -45)
       .style('text-anchor', 'middle')
       .attr('class', 'ylabel')
       .text('Relative Gene Expression');

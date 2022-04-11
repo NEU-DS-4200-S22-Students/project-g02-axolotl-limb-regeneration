@@ -67,12 +67,14 @@
 
   <!-- Visualization goes here -->
   <div class='vis-holder'>
-    <!-- Change viewbox to whatever you want, e.g., '0 0 1000 6000' This determines your aspect ratio and coordinate system -->
-    <!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
-    <svg id='vis-svg-1' preserveAspectRatio='xMidYMid meet' class='vis-svg' viewBox='0 0 1000 1000' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
-
-    </svg>
+    <svg id='dot' preserveAspectRatio='xMidYMid meet' viewBox="0 0 1000 400" class='vis-svg'></svg>
   </div>
+  <div class='vis-holder'>
+    <svg id='line' preserveAspectRatio='xMidYMid meet' viewBox="0 0 700 350" class='line-svg'></svg>
+    <svg id='controls' preserveAspectRatio='xMidYMid meet' viewBox="0 0 300 350" class='control-svg'></svg>
+  </div>
+  
+
 
   <!-- Further writeup -->
   <div class='content-column'>
@@ -113,6 +115,10 @@
       <li><a href='https://gist.github.com/bryanhanson/11344247'>
           Simple D3 Line</a>
         by Bryan Hanson was used as a model to create our line chart using two arrays. 
+      </li>
+      <li><a href='https://jonsadka.com/blog/how-to-create-live-updating-and-flexible-d3-line-charts-using-pseudo-data'>
+          Live Updating and Flexible D3 Linecharts</a>
+        by Jon Sadka was used to learn about creating transitions between lines.
       </li>
     </ul>
   </div>

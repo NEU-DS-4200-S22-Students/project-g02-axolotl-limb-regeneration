@@ -6,22 +6,22 @@ function dotPlot(data) {
 
   // defining margins
   let margin = {
-    top: 60,
-    left: 50,
-    right: 30,
-    bottom: 35
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 20
   },
-  width = 1000,
-  height = 1000;
+  width = 700,
+  height = 300;
 
   //function chart(data) {
 
-  let svg = d3.select('#vis-svg-1')
+  let svg = d3.select('#dot')
     .append('svg')
     .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of its parent element and the page.
     .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
-    .style('background-color', '#ccc') // change the background color to light gray
-    .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
+    .style('background-color', 'white') // change the background color to light gray
+    .attr('viewBox', [0, 0, width, height].join(' '))
 
   // creating an svg group for all of the dot plot elements
   let chartGroup = svg
@@ -68,25 +68,17 @@ function dotPlot(data) {
   chartGroup
     .append('text')
       .attr('x', width/2)
-      .attr('y', 20)
+      .attr('y', 30)
       .attr('class', 'chartTitle')
-      .text('Log Fold Change in Gene Expression Relative to Day 0');
+      .text('Axolotl Genes');
 
   // creating x axis label
   chartGroup
     .append('text')
       .attr('x', width/2)
-      .attr('y', 290)
+      .attr('y', 285)
       .style('text-anchor', 'middle')
-      .text('LFC');
- // return chart;
-//}
-/*
-chart.selectionDispatcher = function (_) {
-  if (!arguments.length) return dispatcher;
-  dispatcher = _;
-  return chart;
-}*/
+      .text('Log Fold Change in Gene Expression Relative to Day 0');
 return dotPlot;
 }
 dotPlot.selectionDispatcher = function (_) {
