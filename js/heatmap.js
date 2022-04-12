@@ -76,7 +76,7 @@ function heatmap(data) {
   
   return heatmap;
 };
-function getData(data) {
+function getDataHeat(data) {
   var xyz = [];
   var yGroups = [];
   for(var i = 0; i < data.length; i++) {
@@ -90,8 +90,8 @@ function getData(data) {
   return [yGroups, xyz];
 };
 
-function render(data) {
-  var [yGroups, newData] = getData(data);
+function renderHeat(data) {
+  var [yGroups, newData] = getDataHeat(data);
   yScaleHeat.domain(yGroups);
   var newYAxis = d3.axisLeft(yScaleHeat);
   svgHeat.selectAll('.y.axis').remove();
@@ -121,5 +121,5 @@ function render(data) {
 heatmap.updateSelection = function (selectedData) {
   if (!arguments.length) return;
     currentData.push(selectedData);
-    render(currentData);
+    renderHeat(currentData);
 };
