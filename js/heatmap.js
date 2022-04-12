@@ -53,25 +53,25 @@ function heatmap(data) {
     .style('border', 'solid')
     .style('border-width', '2px')
     .style('border-radius', '5px')
-    .style('padding', '5px')
+    .style('padding', '5px');
 
   // Three function that change the tooltip when user hover / move / leave a cell
   mouseover = function(d) {
-    tooltip.style('opacity', 1)
+    tooltip.style('opacity', 1);
     d3.select(this)
       .style('stroke', 'black')
-      .style('opacity', 1)
+      .style('opacity', 1);
   }
   mousemove = function(event, d) {
     tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z)
-      .style('left', (event.pageX) + 'px')
-      .style('top', (event.pageY) + 'px');
+      .style('left', event.x / 2 + 'px')
+      .style('top', event.y / 2 + 'px');
   }
   mouseleave = function(d) {
-    tooltip.style('opacity', 0)
+    tooltip.style('opacity', 0);
     d3.select(this)
       .style('stroke', 'none')
-      .style('opacity', 0.8)
+      .style('opacity', 0.8);
   }
   
   return heatmap;
