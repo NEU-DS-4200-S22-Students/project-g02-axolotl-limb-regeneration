@@ -1,6 +1,6 @@
 // Pulling all data from the csv file
 //d3.csv('data/LFC_transformed.csv').then(dotPlot);
-let dispatcher;
+let dispatcher, selectedPoint;
 // Creating a function to create dot plot
 function dotPlot(data) {
 
@@ -57,11 +57,17 @@ function dotPlot(data) {
       .attr('cx', d => xScale(d.LFC))
       .attr('cy', function(d) {return 230 - ((d.key % 95) * 2) })
       .attr('r', 3)
-      .style('stroke', 'grey')
+      .style('stroke', 'gray')
       .attr('fill', function(d) {return colors(d.LFC)})
       .on('click', function(_){
-        d3.select(this).classed('selected', true);
+        if (selectedPoint != null) {
+          selectedPoint.classed('selected', false)
+            .style('stroke', 'gray')
+        }
+        selectedPoint = d3.select(this).classed('selected', true)
+          .style('stroke', 'darkgreen');
         dispatcher.call('dotToLine', this, this.__data__);
+        dispatcher.call('dotToHeat', this, this.__data__);
       });
 
   // creating a chart title 
@@ -78,7 +84,7 @@ function dotPlot(data) {
       .attr('x', width/2)
       .attr('y', 285)
       .style('text-anchor', 'middle')
-      .text('Log Fold Change in Gene Expression Relative to Day 0');
+      .text('Log Fold Change in Gene Expression Relative to Baseline');
 return dotPlot;
 }
 dotPlot.selectionDispatcher = function (_) {

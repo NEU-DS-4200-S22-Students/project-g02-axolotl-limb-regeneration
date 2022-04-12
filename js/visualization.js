@@ -4,13 +4,14 @@
 
   d3.csv('data/LFC_transformed.csv').then(data => {
 
-    let dispatch = d3.dispatch('dotToLine');
+    let dispatch = d3.dispatch('dotToLine', 'dotToHeat');
 
     let dotVis = dotPlot(data)
       .selectionDispatcher(dispatch);
-    let lineVis = lineChart(data['1']);
-
+    let lineVis = lineChart(data);
+    let heatVis = heatmap(data);
     dotVis.selectionDispatcher().on('dotToLine', lineVis.updateSelection);
+    dotVis.selectionDispatcher().on('dotToHeat', heatVis.updateSelection);
   });
 
 })());

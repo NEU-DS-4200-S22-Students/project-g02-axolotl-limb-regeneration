@@ -1,64 +1,125 @@
-// Pulling all data from the csv file
-d3.csv('data/modified_pc.csv').then(heatmap);
-
 // Based on Mike Bostock's margin convention
 // https://bl.ocks.org/mbostock/3019563
-// let margin = {
-// top: 60,
-// left: 50,
-// right: 30,
-// bottom: 20
-//   },
-//   width = 500 - margin.left - margin.right,
-//   height = 500 - margin.top - margin.bottom;
+let xGroups = ['D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
+    'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28'],
+    xValues = [0.5, 1, 1.5, 2, 3, 4, 5, 7, 9, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28],
+    yScaleHeat, svgHeat, xScaleHeat, colors,
+    currentData = [],
+    mouseover, mousemove, mouseleave;
 
 // function that creates the heatmap 
 function heatmap(data) {
-// creating an svg group for all of the heatmap elements
-  let chartGroup = svg
-    .append('g')
-      .attr('transform', 'translate(' + margin.left +', ' + margin.top + ')');
+  let margin = {top: 0, left: 75, right: 30, bottom: 40},
+  width = 600;
+  height = 400;
 
-// labels for the x-axis 
-let xLabels = ['D0', 'D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
-'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28']; 
+  svgHeat = d3.select('#heat')
+    .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform",
+            "translate(" + margin.left + "," + margin.top + ")");
 
-let x = d3.scaleBand()
-  .range([0, width])
-  .domain(xLabels);
+  xScaleHeat = d3.scaleBand()
+    .range([0, width])
+    .domain(xValues)
+    .padding(0.05);
+  let xAxis = svgHeat.append('g')
+    .style('font-size', 15)
+    .attr('transform', 'translate(0,' + height + ')')
+    .call(d3.axisBottom(xScaleHeat).tickSize(0))
+    .select('.domain').remove();
 
-chartGroup.append('g')
-    .attr('transform', 'translate(0, ' + height)
-    .call(d3.axisBottom(x));
-
-
-let y = d3.scaleBand()
+  yScaleHeat = d3.scaleBand()
     .range([height, 0])
-    .domain(data); 
+    .padding(0.05);
+  let yAxis = svgHeat.append('g')
+    .attr('class', 'y axis')
+    .style('font-size', 15)
+    .call(d3.axisLeft(yScaleHeat))
+    .select('.domain').remove();
 
-chartGroup.append('g')
-    .attr('transform', 'translate('+ height +', 0)')
-    .call(d3.axisLeft(y));
+  // color scale from: https://github.com/d3/d3-scale-chromatic
+  colors = d3.scaleSequential(d3.interpolateRdBu)
+    .domain([-8, 8]);
 
-// color scale from: https://github.com/d3/d3-scale-chromatic
-let colors = d3.scaleSequential(d3.interpolateBrBG)
-    .domain([-1, 1]);
+  // create a tooltip
+  var tooltip = d3.select('#heat')
+    .append('div')
+    .style('opacity', 0)
+    .attr('class', 'tooltip')
+    .style('background-color', 'white')
+    .style('border', 'solid')
+    .style('border-width', '2px')
+    .style('border-radius', '5px')
+    .style('padding', '5px')
 
-// used https://d3-graph-gallery.com/graph/heatmap_style.html as reference
-chartGroup.selectAll('rectangle')
-        .data(data, function(d) {return d.xLabels + ':' + d.percent_change})
-    .enter()
-    .append('rectangle')
-    .attr('x', function(d) {return x(d.xLabels)})
-    .attr('y', function(d) {return y(d.percent_change)})
-    .attr('rx', 5)
-    .attr('ry', 5)
-    .attr('width', 20)
-    .attr('height', 20)
-    .style('fill', function(d){return colors(d.percent_change)});
+  // Three function that change the tooltip when user hover / move / leave a cell
+  mouseover = function(d) {
+    tooltip.style('opacity', 1)
+    d3.select(this)
+      .style('stroke', 'black')
+      .style('opacity', 1)
+  }
+  mousemove = function(event, d) {
+    tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z)
+      .style('left', (event.pageX) + 'px')
+      .style('top', (event.pageY) + 'px');
+  }
+  mouseleave = function(d) {
+    tooltip.style('opacity', 0)
+    d3.select(this)
+      .style('stroke', 'none')
+      .style('opacity', 0.8)
+  }
+  
+  return heatmap;
+};
+function getData(data) {
+  var xyz = [];
+  var yGroups = [];
+  for(var i = 0; i < data.length; i++) {
+    gene = data[i]
+    yGroups.push(gene['human_gene'])
+    for(var j = 0; j < xGroups.length; j++) {
+      value = Math.log2(gene[xGroups[j]] / gene['D0'])
+      xyz.push({x: xGroups[j], y: gene['human_gene'], z: value});
+    }
+  }
+  return [yGroups, xyz];
+};
 
+function render(data) {
+  var [yGroups, newData] = getData(data);
+  yScaleHeat.domain(yGroups);
+  var newYAxis = d3.axisLeft(yScaleHeat);
+  svgHeat.selectAll('.y.axis').remove();
+  svgHeat.append('g').attr('class', 'y axis').call(newYAxis);
+  //svgHeat.selectAll('.y.axis').transition().duration(1500).call(newYAxis);
+  svgHeat.selectAll('.heat').remove();
+  var genes = svgHeat.selectAll('.heat').data(newData, function(d) {return d.x + ':' + d.y;}).attr('class', 'heat');
+  genes.enter()
+    .append('rect')
+      //.transition().duration(1500)
+      .attr('class', 'heat')
+      .attr('x', function(d) {return xScaleHeat(parseFloat(d.x.substring(1)));})
+      .attr('y', function(d) {return yScaleHeat(d.y);})
+      .attr('rx', 4)
+      .attr('ry', 4)
+      .attr('width', xScaleHeat.bandwidth() )
+      .attr('height', yScaleHeat.bandwidth() )
+      .style('fill', function(d) {return colors(d.z)})
+      .style('stroke-width', 4)
+      .style('stroke', 'none')
+      .style('opacity', 0.8)
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave)
+};
 
-
-
-
-}
+heatmap.updateSelection = function (selectedData) {
+  if (!arguments.length) return;
+    currentData.push(selectedData);
+    render(currentData);
+};
