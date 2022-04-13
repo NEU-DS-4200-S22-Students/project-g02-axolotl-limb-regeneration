@@ -45,6 +45,22 @@ function dotPlot(data) {
   let colors = d3.scaleSequential(d3.interpolateRdBu)
     .domain([-8, 8])
 
+  let tooltip = d3.select('#dot-holder')
+    .append('div')
+    .classed('tooltip', true);
+
+  let mouseover = function(d) {
+    tooltip.style('opacity', 1);
+  }
+  let mousemove = function(event, d) {
+    tooltip.html(d.human_gene + '/' + d.axolotl_gene)
+      .style('left', event.pageX + 'px')
+      .style('top', (event.pageY + 50) + 'px');
+  }
+  let mouseleave = function(d) {
+    tooltip.style('opacity', 0);
+  }
+
   // creating dots on the plot
   chartGroup 
     .selectAll('circle')
@@ -59,16 +75,19 @@ function dotPlot(data) {
       .attr('r', 3)
       .style('stroke', 'gray')
       .attr('fill', function(d) {return colors(d.LFC)})
-      .on('click', function(_){
-        if (selectedPoint != null) {
-          selectedPoint.classed('selected', false)
-            .style('stroke', 'gray')
-        }
-        selectedPoint = d3.select(this).classed('selected', true)
-          .style('stroke', 'darkgreen');
-        dispatcher.call('dotToLine', this, this.__data__);
-        dispatcher.call('dotToHeat', this, this.__data__);
-      });
+    .on('click', function(_){
+      if (selectedPoint != null) {
+        selectedPoint.classed('selected', false)
+          .style('stroke', 'gray')
+      }
+      selectedPoint = d3.select(this).classed('selected', true)
+        .style('stroke', 'darkgreen');
+      dispatcher.call('dotToLine', this, this.__data__);
+      dispatcher.call('dotToHeat', this, this.__data__);
+    })
+    .on("mouseover", mouseover)
+    .on("mousemove", mousemove)
+    .on("mouseleave", mouseleave);
 
   // creating a chart title 
   chartGroup

@@ -34,6 +34,15 @@ h1, h2, h3 {
   flex: 1;
 }
 
+div.tooltip {
+  position: absolute;
+  opacity: 0;
+  background-color: white;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
 circle.selected {
 	fill: lightgreen;
 	opacity: 1;

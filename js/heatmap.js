@@ -45,33 +45,25 @@ function heatmap(data) {
     .domain([-8, 8]);
 
   // create a tooltip
-  var tooltip = d3.select('#heat')
+  var tooltip = d3.select('#heat-holder')
     .append('div')
-    .style('opacity', 0)
-    .attr('class', 'tooltip')
-    .style('background-color', 'white')
-    .style('border', 'solid')
-    .style('border-width', '2px')
-    .style('border-radius', '5px')
-    .style('padding', '5px');
+    .classed('tooltip', true);
 
   // Three function that change the tooltip when user hover / move / leave a cell
   mouseover = function(d) {
     tooltip.style('opacity', 1);
     d3.select(this)
-      .style('stroke', 'black')
-      .style('opacity', 1);
+      .style('stroke', 'black');
   }
   mousemove = function(event, d) {
-    tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z)
-      .style('left', event.x / 2 + 'px')
-      .style('top', event.y / 2 + 'px');
+    tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z.toFixed(2))
+      .style('left', event.pageX + 'px')
+      .style('top', (event.pageY + 50) + 'px');
   }
   mouseleave = function(d) {
     tooltip.style('opacity', 0);
     d3.select(this)
-      .style('stroke', 'none')
-      .style('opacity', 0.8);
+      .style('stroke', 'none');
   }
   
   return heatmap;
@@ -112,7 +104,7 @@ function renderHeat(data) {
       .style('fill', function(d) {return colors(d.z)})
       .style('stroke-width', 4)
       .style('stroke', 'none')
-      .style('opacity', 0.8)
+      .style('opacity', 1)
     .on("mouseover", mouseover)
     .on("mousemove", mousemove)
     .on("mouseleave", mouseleave)
