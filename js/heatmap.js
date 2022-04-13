@@ -9,8 +9,8 @@ let xGroups = ['D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10',
 
 // function that creates the heatmap 
 function heatmap(data) {
-  let margin = {top: 0, left: 75, right: 30, bottom: 40},
-  width = 600;
+  let margin = {top: 10, left: 150, right: 30, bottom: 40},
+  width = 700;
   height = 400;
 
   svgHeat = d3.select('#heat')
@@ -26,7 +26,7 @@ function heatmap(data) {
     .domain(xValues)
     .padding(0.05);
   let xAxis = svgHeat.append('g')
-    .style('font-size', 15)
+    .style('font-size', 12)
     .attr('transform', 'translate(0,' + height + ')')
     .call(d3.axisBottom(xScaleHeat).tickSize(0))
     .select('.domain').remove();
@@ -36,13 +36,12 @@ function heatmap(data) {
     .padding(0.05);
   let yAxis = svgHeat.append('g')
     .attr('class', 'y axis')
-    .style('font-size', 15)
     .call(d3.axisLeft(yScaleHeat))
     .select('.domain').remove();
 
   // color scale from: https://github.com/d3/d3-scale-chromatic
   colors = d3.scaleSequential(d3.interpolateRdBu)
-    .domain([-8, 8]);
+    .domain([-12, 12]);
 
   // create a tooltip
   var tooltip = d3.select('#heat-holder')
@@ -54,18 +53,25 @@ function heatmap(data) {
     tooltip.style('opacity', 1);
     d3.select(this)
       .style('stroke', 'black');
-  }
+  };
   mousemove = function(event, d) {
     tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z.toFixed(2))
-      .style('left', event.pageX + 'px')
-      .style('top', (event.pageY + 50) + 'px');
-  }
+      .style('left', (event.pageX + 10) + 'px')
+      .style('top', (event.pageY + 25) + 'px');
+  };
   mouseleave = function(d) {
     tooltip.style('opacity', 0);
     d3.select(this)
       .style('stroke', 'none');
-  }
+  };
   
+  svgHeat.append('text')
+    .attr('x', (width) / 2)
+    .attr('y', height + 35)
+    .style('font-size', 16)
+    .style('text-anchor', 'middle')
+    .text('Days Since Amputation');
+
   return heatmap;
 };
 function getDataHeat(data) {
@@ -73,10 +79,10 @@ function getDataHeat(data) {
   var yGroups = [];
   for(var i = 0; i < data.length; i++) {
     gene = data[i]
-    yGroups.push(gene['human_gene'])
+    yGroups.push(gene['human_gene'] + '/' + gene['axolotl_gene'])
     for(var j = 0; j < xGroups.length; j++) {
       value = Math.log2(gene[xGroups[j]] / gene['D0'])
-      xyz.push({x: xGroups[j], y: gene['human_gene'], z: value});
+      xyz.push({x: xGroups[j], y: gene['human_gene'] + '/' + gene['axolotl_gene'], z: value});
     }
   }
   return [yGroups, xyz];
@@ -87,7 +93,11 @@ function renderHeat(data) {
   yScaleHeat.domain(yGroups);
   var newYAxis = d3.axisLeft(yScaleHeat);
   svgHeat.selectAll('.y.axis').remove();
-  svgHeat.append('g').attr('class', 'y axis').call(newYAxis);
+  svgHeat.append('g')
+    .attr('class', 'y axis')
+    .style('font-size', 12)
+    .call(newYAxis)
+    .select('.domain').remove();
   //svgHeat.selectAll('.y.axis').transition().duration(1500).call(newYAxis);
   svgHeat.selectAll('.heat').remove();
   var genes = svgHeat.selectAll('.heat').data(newData, function(d) {return d.x + ':' + d.y;}).attr('class', 'heat');

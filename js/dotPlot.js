@@ -43,7 +43,7 @@ function dotPlot(data) {
 
   // adding a divergent color scale
   let colors = d3.scaleSequential(d3.interpolateRdBu)
-    .domain([-8, 8])
+    .domain([-8, 8]);
 
   let tooltip = d3.select('#dot-holder')
     .append('div')
@@ -54,8 +54,8 @@ function dotPlot(data) {
   }
   let mousemove = function(event, d) {
     tooltip.html(d.human_gene + '/' + d.axolotl_gene)
-      .style('left', event.pageX + 'px')
-      .style('top', (event.pageY + 50) + 'px');
+      .style('left', (event.pageX + 10) + 'px')
+      .style('top', (event.pageY + 25) + 'px');
   }
   let mouseleave = function(d) {
     tooltip.style('opacity', 0);

@@ -38,6 +38,7 @@ function lineChart(data) {
   chartGroup
     .append('g')
       .attr('transform', 'translate(0,' + (height) + ')')
+    .style('font-size', 14)
     .call(xAxis)
 
   // creating a y scale
@@ -48,6 +49,7 @@ function lineChart(data) {
   // drawing y axis
   let yAxis = chartGroup.append('g')
     .attr('class', 'y axis')
+    .style('font-size', 14)
     .call(d3.axisLeft(yScale));
 
   line = d3.line()
@@ -66,14 +68,14 @@ function lineChart(data) {
   // Adding x axis label
   chartGroup.append('text')
     .attr('x', (width + margin.left) / 2)
-    .attr('y', height + 35)
+    .attr('y', height + 40)
     .style('text-anchor', 'middle')
     .text('Days Since Amputation');
 
   // Adding y axis label
   chartGroup.append('text')
     .attr('x', -height/2)
-    .attr('y', -45)
+    .attr('y', -55)
     .style('text-anchor', 'middle')
     .attr('class', 'ylabel')
     .text('Relative Gene Expression');
