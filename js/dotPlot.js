@@ -6,13 +6,13 @@ function dotPlot(data) {
 
   // defining margins
   let margin = {
-    top: 0,
-    left: 0,
-    right: 0,
+    top: 20,
+    left: 50,
+    right: 50,
     bottom: 20
   },
-  width = 700,
-  height = 300;
+  width = 950,
+  height = 400;
 
   //function chart(data) {
 
@@ -38,8 +38,19 @@ function dotPlot(data) {
   chartGroup
     .append('g')
       .attr('class', 'x axis')
-      .attr('transform', 'translate(0, 250)')
+      .attr('transform', `translate(0, ${370 - margin.bottom - margin.top})`)
     .call(xAxis)
+
+  let yScale = d3.scaleLinear()
+    .domain([3, 15])
+    .range([370 - margin.bottom - margin.top, margin.top]);
+
+  // creating an x axis based on the xScale
+  let yAxis = d3.axisLeft(yScale)
+  chartGroup
+    .append('g')
+      .attr('class', 'y axis')
+    .call(yAxis)
 
   // adding a divergent color scale
   let colors = d3.scaleSequential(d3.interpolateRdBu)
@@ -71,7 +82,7 @@ function dotPlot(data) {
         return d.key;
       })
       .attr('cx', d => xScale(d.LFC))
-      .attr('cy', function(d) {return 230 - ((d.key % 95) * 2) })
+      .attr('cy', d => yScale(d.LME))
       .attr('r', 3)
       .style('stroke', 'gray')
       .attr('fill', function(d) {return colors(d.LFC)})
@@ -93,7 +104,7 @@ function dotPlot(data) {
   chartGroup
     .append('text')
       .attr('x', width/2)
-      .attr('y', 30)
+      .attr('y', 5)
       .attr('class', 'chartTitle')
       .text('Axolotl Genes');
 
@@ -101,9 +112,18 @@ function dotPlot(data) {
   chartGroup
     .append('text')
       .attr('x', width/2)
-      .attr('y', 285)
+      .attr('y', 370)
       .style('text-anchor', 'middle')
       .text('Log Fold Change in Gene Expression Relative to Baseline');
+
+  // Adding y axis label
+  chartGroup.append('text')
+    .attr('x', -height/2)
+    .attr('y', -50)
+    .style('text-anchor', 'middle')
+    .attr('class', 'ylabel')
+    .text('Mean Gene Expression');
+
 return dotPlot;
 }
 dotPlot.selectionDispatcher = function (_) {
