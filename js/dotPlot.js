@@ -28,6 +28,36 @@ function dotPlot(data) {
     .append('g')
       .attr('transform', 'translate(' + margin.left +', ' + margin.top + ')');
 
+      let idled = function() {
+        idleTimeout = null;
+      }
+      let zoom = function() {
+        let selected = d3.brushSelection(this);
+        console.log(selected)
+        if (!selected) {
+          if (!idleTimeout) return idleTimeout = setTimeout(idled, idleDelay);
+          xScale.domain([-12, 8]);
+          yScale.domain([3, 15]);
+        } else {
+          xScale.domain([selected[0][0], selected[1][0]].map(xScale.invert, xScale));
+          yScale.domain([selected[1][1], selected[0][1]].map(yScale.invert, yScale));
+          chartGroup.call(brush.move, null);
+        
+          let transition = chartGroup.transition().duration(750);
+          chartGroup.select(".x.axis").transition(transition).call(xAxis);
+          chartGroup.select(".y.axis").transition(transition).call(yAxis);
+          chartGroup.selectAll("circle").transition(transition)
+            .attr('cx', d => xScale(d.LFC))
+            .attr('cy', d => yScale(d.LME));
+        }
+        console.log(chartGroup.select('.brush'))
+      }
+    
+      let brush = d3.brush().on("end", zoom),
+        idleTimeout,
+        idleDelay = 350;
+      chartGroup.call(brush);
+      
   // creating a scale for the x axis
   let xScale = d3.scaleLinear()
     .domain([-12, 8])
@@ -71,6 +101,9 @@ function dotPlot(data) {
   let mouseleave = function(d) {
     tooltip.style('opacity', 0);
   }
+  let mousedown = function(event, d) {
+  
+  }
 
   // creating dots on the plot
   chartGroup 
@@ -98,7 +131,8 @@ function dotPlot(data) {
     })
     .on("mouseover", mouseover)
     .on("mousemove", mousemove)
-    .on("mouseleave", mouseleave);
+    .on("mouseleave", mouseleave)
+    .on('mousedown', mousedown);
 
   // creating a chart title 
   chartGroup
@@ -117,65 +151,12 @@ function dotPlot(data) {
       .text('Log Fold Change in Gene Expression Relative to Baseline');
 
   // Adding y axis label
-  chartGroup.append('text')
+  svg.append('text')
     .attr('x', -height/2)
-    .attr('y', -50)
+    .attr('y', -50 + margin.left)
     .style('text-anchor', 'middle')
     .attr('class', 'ylabel')
     .text('Mean Gene Expression');
-
-  //////////////////////////////////////////
-  //////// creating zooming feature ////////
-  /////////////////////////////////////////
-
-  // let clip = chartGroup.append("defs").append("svg:clipPath")
-  //     .attr("id", "clip")
-  //     .append("svg:rect")
-  //     .attr("width", width )
-  //     .attr("height", height )
-  //     .attr("x", 0)
-  //     .attr("y", 0);
-
-  // let brush = d3.brush()
-  //   //.extent([[0,0], [width, height]])
-  //   .on('end', brushed); 
-
-  // chartGroup.append('g')
-  // .attr("clip-path", "url(#clip)");
-
-  // chartGroup.append('g') 
-  //   .attr('class', 'brush')
-  //   .call(brush);
-
-  // let idleTimeout;
-  // function idled() {
-  //   idleTimeout = null
-  // }
-
-  // function brushed() { 
-  //   let area =  d3.event.selection;
-  //   if (!area) {
-  //     if (!idleTimeout) return idleTimeout = setTimeout(idled, idleDelay); 
-  //   x.domain(x0);
-  //   y.domain(y0);
-  //   }
-  //   else {
-  //     x.domain([area[0][0], area[1][0]].map(x.invert, x));
-  //     y.domain([area[1][1], area[0][1]].map(y.invert, y));
-  //     chartGroup.select('.brush').call(brush.move, null);
-  //   }
-  //   zoom();
-  // }
-
-  // function zoom() {
-  //   xAxis.transition().duration(1000).call(d3.axisBottom(x))
-  //   chartGroup
-  //     .select(".axis--x").transition(t).call(xAxis)
-  //     .select(".axis--y").transition(t).call(yAxis)
-  //     .selectAll("circle").transition(t)
-  //       .attr("cx", function(d) { return x(d[0]); })
-  //       .attr("cy", function(d) { return y(d[1]); });
-  // }
 
 return dotPlot;
 }
