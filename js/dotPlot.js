@@ -124,6 +124,59 @@ function dotPlot(data) {
     .attr('class', 'ylabel')
     .text('Mean Gene Expression');
 
+  //////////////////////////////////////////
+  //////// creating zooming feature ////////
+  /////////////////////////////////////////
+
+  // let clip = chartGroup.append("defs").append("svg:clipPath")
+  //     .attr("id", "clip")
+  //     .append("svg:rect")
+  //     .attr("width", width )
+  //     .attr("height", height )
+  //     .attr("x", 0)
+  //     .attr("y", 0);
+
+  // let brush = d3.brush()
+  //   //.extent([[0,0], [width, height]])
+  //   .on('end', brushed); 
+
+  // chartGroup.append('g')
+  // .attr("clip-path", "url(#clip)");
+
+  // chartGroup.append('g') 
+  //   .attr('class', 'brush')
+  //   .call(brush);
+
+  // let idleTimeout;
+  // function idled() {
+  //   idleTimeout = null
+  // }
+
+  // function brushed() { 
+  //   let area =  d3.event.selection;
+  //   if (!area) {
+  //     if (!idleTimeout) return idleTimeout = setTimeout(idled, idleDelay); 
+  //   x.domain(x0);
+  //   y.domain(y0);
+  //   }
+  //   else {
+  //     x.domain([area[0][0], area[1][0]].map(x.invert, x));
+  //     y.domain([area[1][1], area[0][1]].map(y.invert, y));
+  //     chartGroup.select('.brush').call(brush.move, null);
+  //   }
+  //   zoom();
+  // }
+
+  // function zoom() {
+  //   xAxis.transition().duration(1000).call(d3.axisBottom(x))
+  //   chartGroup
+  //     .select(".axis--x").transition(t).call(xAxis)
+  //     .select(".axis--y").transition(t).call(yAxis)
+  //     .selectAll("circle").transition(t)
+  //       .attr("cx", function(d) { return x(d[0]); })
+  //       .attr("cy", function(d) { return y(d[1]); });
+  // }
+
 return dotPlot;
 }
 dotPlot.selectionDispatcher = function (_) {
