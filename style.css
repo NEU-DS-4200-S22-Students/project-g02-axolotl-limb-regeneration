@@ -47,6 +47,7 @@ div.tooltip {
 circle.selected {
 	fill: lightgreen;
 	opacity: 1;
+	stroke:  darkgreen;
   stroke-width: 1.5;
 }
 
