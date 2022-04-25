@@ -171,6 +171,34 @@ function dotPlot(data) {
     .on("mousemove", mousemove)
     .on("mouseleave", mouseleave)
 
+// filtering points based on categories 
+function filterPoints() {
+    const filter_section = d3.select('svg').append('div')
+    const filter_select = filter_section.append('select');
+    filter_select.append('option').property('value', 0).text('Categories');
+    filter_select.append('option').property('value', 1).text('All Categories');
+    filter_select.append('option').property('value', 2).text('Category 1');
+    filter_select.append('option').property('value', 3).text('Category 2');
+    filter_select.append('option').property('value', 4).text('Category 3');
+    filter_select.append('option').property('value', 5).text('Category 4');
+    filter_select.append('option').property('value', 6).text('Category 5');
+    filter_select.append('option').property('value', 7).text('Category 6');
+
+    filter_select.on('change', function () {
+      const val = +this.value;
+      plot.select('#dotplot').selectAll('circle')
+        .transition()
+        .style('display', 'initial');
+      if (val > 0) {
+        plot.select('#dotplot').selectAll('circle')
+          .transition()
+          .style('display', d => d.cluster === val ? 'inital' : 'none');
+      }
+    });
+  }
+
+  filterPoints();
+
 return dotPlot;
 }
 
