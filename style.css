@@ -51,6 +51,10 @@ circle.selected {
   stroke-width: 1.5;
 }
 
+circle.invisible {
+  opacity: 0;
+}
+
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
 #forkongithub a{
 	background:#00F;

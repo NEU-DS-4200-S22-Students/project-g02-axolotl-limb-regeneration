@@ -59,7 +59,7 @@ function dotPlot(data) {
   // adding a divergent color scale
   let colors = d3.scaleSequential(d3.interpolateRdBu)
     .domain([-8, 8]);
-
+   
   // creating a chart title 
   svg.append('text')
     .attr('x', width/2)
@@ -99,25 +99,35 @@ function dotPlot(data) {
       xScale.domain(x0);
       yScale.domain(y0);
     } else {
+      chartGroup.selectAll("circle").classed('invisible', function(d){
+        xLower = selected[0][0],
+        xUpper = selected[1][0],
+        yLower = selected[0][1],
+        yUpper = selected[1][1];
+        console.log(xScale(d['LFC']), xLower, xUpper)
+        return (xScale(d.LFC) < xLower || xScale(d.LFC) > xUpper || yScale(d.LME) < yLower || yScale(d.LME) > yUpper);
+      })
       xScale.domain([selected[0][0], selected[1][0]].map(xScale.invert, xScale));
       yScale.domain([selected[1][1], selected[0][1]].map(yScale.invert, yScale));
       chartGroup.call(brush.move, null);
-        
       let transition = chartGroup.transition().duration(750);
       chartGroup.select(".x.axis").transition(transition).call(xAxis);
       chartGroup.select(".y.axis").transition(transition).call(yAxis);
       chartGroup.selectAll("circle").transition(transition)
         .attr('cx', d => xScale(d.LFC))
         .attr('cy', d => yScale(d.LME));
+      
     }
-    console.log(chartGroup.select('.brush'))
   }
 
   // creating a brush event that calls the zoom function after the user makes a brush selection
-  let brush = d3.brush().on("end", zoom),
-    idleTimeout,
-    idleDelay = 350;
+  let brush = d3.brush()
+    .extent([[0,margin.top], [width - margin.left - margin.right, height - margin.top - margin.bottom]])
+    .on("end", zoom);
   chartGroup.call(brush);
+
+  let idleTimeout,
+    idleDelay = 350;
 
   // creating a div container to hold the tool tips
   let tooltip = d3.select('#dot-holder')
@@ -128,6 +138,9 @@ function dotPlot(data) {
   // returns the previous point to its assigned color, and
   // passes the data for the selected point to the line chart and heat map
   let click = function(event){
+      if (getComputedStyle(this).opacity == 0) {
+        return;
+      }
       if (selectedPoint != null) {
         selectedPoint.classed('selected', false)
       }
@@ -138,7 +151,9 @@ function dotPlot(data) {
 
   // makes the tool tip visible while the mouse hovers over a point in the plot
   let mouseover = function(d) {
-    tooltip.style('opacity', 1);
+    if (getComputedStyle(this).opacity != 0) {
+      tooltip.style('opacity', 1);
+    }
   }
 
   // populates the tool tip with the human gene name and the probe name and
