@@ -110,14 +110,24 @@ function dotPlot(data) {
       xScale.domain([selected[0][0], selected[1][0]].map(xScale.invert, xScale));
       yScale.domain([selected[1][1], selected[0][1]].map(yScale.invert, yScale));
       chartGroup.call(brush.move, null);
+      transitionChart();
+    }
+  }
+
+  chartGroup.on("dblclick",function() {
+    xScale.domain(x0);
+    yScale.domain(y0);
+    chartGroup.selectAll('circle').classed('invisible', false);
+    transitionChart();
+  });
+
+  let transitionChart = function() {
       let transition = chartGroup.transition().duration(750);
       chartGroup.select(".x.axis").transition(transition).call(xAxis);
       chartGroup.select(".y.axis").transition(transition).call(yAxis);
       chartGroup.selectAll("circle").transition(transition)
         .attr('cx', d => xScale(d.LFC))
         .attr('cy', d => yScale(d.LME));
-      
-    }
   }
 
   // creating a brush event that calls the zoom function after the user makes a brush selection
