@@ -1,6 +1,6 @@
 
 // defining a dispatcher to carry the information for the most recent selected point
-let dispatcher, selectedPoint;
+let dispatcher, selectedPoint, resetChart, category = 0;
 
 // Creating a function to create dot plot
 function dotPlot(data) {
@@ -24,13 +24,13 @@ function dotPlot(data) {
     .attr('viewBox', [0, 0, width, height].join(' '))
 
   // creating an svg group for all of the points in the volcano plot
-  let chartGroup = svg
+  chartGroupDot = svg
     .append('g')
       .attr('transform', 'translate(' + margin.left +', ' + margin.top + ')');
 
   // defining variables for the default axis scales
-  let x0 = [-12, 8];
-  let y0 = [3,15];
+  let x0 = [-12, 8],
+  y0 = [3,15];
       
   // creating a scale for the x axis
   let xScale = d3.scaleLinear()
@@ -39,7 +39,7 @@ function dotPlot(data) {
 
   // creating an x axis based on the xScale
   let xAxis = d3.axisBottom(xScale)
-  chartGroup
+  chartGroupDot
     .append('g')
       .attr('class', 'x axis')
       .attr('transform', `translate(0, ${height - margin.bottom - margin.top})`)
@@ -51,7 +51,7 @@ function dotPlot(data) {
 
   // creating an x axis based on the xScale
   let yAxis = d3.axisLeft(yScale)
-  chartGroup
+  chartGroupDot
     .append('g')
       .attr('class', 'y axis')
     .call(yAxis)
@@ -99,7 +99,7 @@ function dotPlot(data) {
       xScale.domain(x0);
       yScale.domain(y0);
     } else {
-      chartGroup.selectAll("circle").classed('invisible', function(d){
+      chartGroupDot.selectAll("circle").classed('invisible', function(d){
         xLower = selected[0][0],
         xUpper = selected[1][0],
         yLower = selected[0][1],
@@ -109,23 +109,25 @@ function dotPlot(data) {
       })
       xScale.domain([selected[0][0], selected[1][0]].map(xScale.invert, xScale));
       yScale.domain([selected[1][1], selected[0][1]].map(yScale.invert, yScale));
-      chartGroup.call(brush.move, null);
+      chartGroupDot.call(brush.move, null);
       transitionChart();
     }
   }
 
-  chartGroup.on("dblclick",function() {
+  resetChart = function() {
     xScale.domain(x0);
     yScale.domain(y0);
-    chartGroup.selectAll('circle').classed('invisible', false);
+    filterCategories(category);
     transitionChart();
-  });
+  }
+
+  chartGroupDot.on("dblclick", resetChart);
 
   let transitionChart = function() {
-      let transition = chartGroup.transition().duration(750);
-      chartGroup.select(".x.axis").transition(transition).call(xAxis);
-      chartGroup.select(".y.axis").transition(transition).call(yAxis);
-      chartGroup.selectAll("circle").transition(transition)
+      let transition = chartGroupDot.transition().duration(750);
+      chartGroupDot.select(".x.axis").transition(transition).call(xAxis);
+      chartGroupDot.select(".y.axis").transition(transition).call(yAxis);
+      chartGroupDot.selectAll("circle").transition(transition)
         .attr('cx', d => xScale(d.LFC))
         .attr('cy', d => yScale(d.LME));
   }
@@ -134,7 +136,7 @@ function dotPlot(data) {
   let brush = d3.brush()
     .extent([[0,margin.top], [width - margin.left - margin.right, height - margin.top - margin.bottom]])
     .on("end", zoom);
-  chartGroup.call(brush);
+  chartGroupDot.call(brush);
 
   let idleTimeout,
     idleDelay = 350;
@@ -180,7 +182,7 @@ function dotPlot(data) {
   }
 
   // creating dots on the plot
-  chartGroup 
+  chartGroupDot 
     .selectAll('circle')
       .data(data)
     .enter()
@@ -196,6 +198,16 @@ function dotPlot(data) {
     .on("mousemove", mousemove)
     .on("mouseleave", mouseleave)
 
+  let filterCategories = function() {
+    console.log(category)
+    chartGroupDot.selectAll('circle').classed('invisible', function(d) {
+      if (category == 0) {
+        return false;
+      }
+      return !(category == d.cluster);
+    })
+  }
+/*
 // filtering points based on categories 
 function filterPoints() {
     const filter_section = d3.select('svg').append('div')
@@ -211,11 +223,11 @@ function filterPoints() {
 
     filter_select.on('change', function () {
       const val = +this.value;
-      plot.select('#dotplot').selectAll('circle')
+      chartGroupDot.selectAll('circle')
         .transition()
         .style('display', 'initial');
       if (val > 0) {
-        plot.select('#dotplot').selectAll('circle')
+        chartGroupDot.selectAll('circle')
           .transition()
           .style('display', d => d.cluster === val ? 'inital' : 'none');
       }
@@ -223,12 +235,17 @@ function filterPoints() {
   }
 
   filterPoints();
-
+*/
 return dotPlot;
 }
-
 
 dotPlot.selectionDispatcher = function (_) {
   if (!arguments.length) return dispatcher;
   dispatcher = _;
   return dotPlot;}
+
+dotPlot.filter = function(selection) {
+  category = selection;
+  console.log(selection)
+  resetChart();
+}

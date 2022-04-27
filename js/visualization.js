@@ -12,6 +12,12 @@
     let heatVis = heatmap(data);
     dotVis.selectionDispatcher().on('dotToLine', lineVis.updateSelection);
     dotVis.selectionDispatcher().on('dotToHeat', heatVis.updateSelection);
+    d3.select("#categoryButton").on("change", function(d) {
+      // recover the option that has been chosen
+      var selectedOption = d3.select(this).property("value")
+      // run the updateChart function with this selected option
+      dotVis.filter(selectedOption);
+    })
   });
 
 })());

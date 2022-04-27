@@ -87,18 +87,17 @@
 
   <!-- Drop down menu --> 
   <div class="dropdown">
-    <button class="dropbtn">Categories ▼</button>
-    <div class="dropdown-content">
-      <a href="#">All Categories</a>
-      <a href="#">Category 1</a>
-      <a href="#">Category 2</a>
-      <a href="#">Category 3</a>
-      <a href="#">Category 4</a>
-      <a href="#">Category 5</a>
-      <a href="#">Category 6</a>
-    </div>
+    <select class = "dropbtn" id='categoryButton'>
+      <option value="0">All Genes</option>
+      <option value="1">Cluster 1</option>
+      <option value="2">Cluster 2</option>
+      <option value="3">Cluster 3</option>
+      <option value="4">Cluster 4</option>
+      <option value="5">Cluster 5</option>
+      <option value="6">Cluster 6</option>
+    </select>
   </div>
-
+  
   <!-- Visualization goes here -->
   <div class='vis-holder' id='dot-holder'>
     <svg id='dot' preserveAspectRatio='xMidYMid meet' viewBox="0 0 1000 400" class='vis-svg'></svg>

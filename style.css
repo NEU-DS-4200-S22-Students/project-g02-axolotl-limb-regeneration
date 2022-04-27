@@ -128,9 +128,8 @@ circle.invisible {
 .dropbtn {
 	background-color: grey;
 	color: white;
-	padding: 16px;
+	padding: 5px;
 	font-size: 16px;
-	border: none;
   }
   
   /* positioning the dropdown */
@@ -140,6 +139,7 @@ circle.invisible {
   }
   
   /* inside of dropdown menu */
+  /*
   .dropdown-content {
 	display: none;
 	position: absolute;
@@ -148,6 +148,7 @@ circle.invisible {
   }
   
   /* dropdown options with links */
+  /*
   .dropdown-content a {
 	color: black;
 	padding: 12px 16px;
@@ -155,10 +156,11 @@ circle.invisible {
   }
   
   /* hovering on the dropdown options changes their color */
+  /*
   .dropdown-content a:hover {background-color: #ddd;}
   
   /* dropdown menu itself is hidden by default, so when hovering it is displayed */
-  .dropdown:hover .dropdown-content {display: block;}
+  /*.dropdown:hover .dropdown-content {display: black;}
   
   /* when the dropdown menu is hovered over, change the color to black */
   .dropdown:hover .dropbtn {background-color: black;}
