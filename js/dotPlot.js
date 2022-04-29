@@ -93,7 +93,6 @@ function dotPlot(data) {
   // If the action creates a brush selection, it zooms into that selection and updates the axes.
   let zoom = function() {
     let selected = d3.brushSelection(this);
-    console.log(selected)
     if (!selected) {
       if (!idleTimeout) return idleTimeout = setTimeout(idled, idleDelay);
       xScale.domain(x0);
@@ -104,8 +103,13 @@ function dotPlot(data) {
         xUpper = selected[1][0],
         yLower = selected[0][1],
         yUpper = selected[1][1];
-        console.log(xScale(d['LFC']), xLower, xUpper)
-        return (xScale(d.LFC) < xLower || xScale(d.LFC) > xUpper || yScale(d.LME) < yLower || yScale(d.LME) > yUpper);
+        if (category == 0) {
+          cluster = false;
+        }
+        else {
+          cluster = (d.cluster != category);
+        }
+        return (xScale(d.LFC) < xLower || xScale(d.LFC) > xUpper || yScale(d.LME) < yLower || yScale(d.LME) > yUpper || cluster);
       })
       xScale.domain([selected[0][0], selected[1][0]].map(xScale.invert, xScale));
       yScale.domain([selected[1][1], selected[0][1]].map(yScale.invert, yScale));
@@ -199,7 +203,6 @@ function dotPlot(data) {
     .on("mouseleave", mouseleave)
 
   let filterCategories = function() {
-    console.log(category)
     chartGroupDot.selectAll('circle').classed('invisible', function(d) {
       if (category == 0) {
         return false;
@@ -246,6 +249,5 @@ dotPlot.selectionDispatcher = function (_) {
 
 dotPlot.filter = function(selection) {
   category = selection;
-  console.log(selection)
   resetChart();
 }
