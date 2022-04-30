@@ -1,6 +1,6 @@
 
 // defining a dispatcher to carry the information for the most recent selected point
-let dispatcher, selectedPoint, resetChart, category = 0;
+let dispatcher, selectedPoint, selectedGene, resetChart, category = 0;
 
 // Creating a function to create dot plot
 function dotPlot(data) {
@@ -121,7 +121,12 @@ function dotPlot(data) {
   resetChart = function() {
     xScale.domain(x0);
     yScale.domain(y0);
-    renderData(filterCategories())
+    renderData(filterCategories());
+    selected = d3.select("#" + selectedGene);
+    if (selected != null) {
+      selectedPoint = selected;
+      selectedPoint.classed('selected', true)
+    }
     transitionChart();
   }
 
@@ -161,6 +166,7 @@ function dotPlot(data) {
         selectedPoint.classed('selected', false)
       }
       selectedPoint = d3.select(this).classed('selected', true)
+      selectedGene = this.id;
       dispatcher.call('dotToLine', this, this.__data__);
       dispatcher.call('dotToHeat', this, this.__data__);
     }
@@ -193,7 +199,7 @@ function dotPlot(data) {
         .data(selectedData)
       .enter()
       .append('circle')
-        .attr('id', d => d.key)
+        .attr('id', d => d.axolotl_gene)
         .attr('cx', d => xScale(d.LFC))
         .attr('cy', d => yScale(d.LME))
         .attr('fill', d => colors(d.LFC))
@@ -266,4 +272,18 @@ dotPlot.selectionDispatcher = function (_) {
 dotPlot.filter = function(selection) {
   category = selection;
   resetChart();
+}
+
+dotPlot.select = function(key) {
+  gene = document.getElementById(key)
+  if (getComputedStyle(gene).opacity != 0) {
+    if (selectedPoint != null) {
+      selectedPoint.classed('selected', false)
+    }
+    selectedPoint = d3.select('#' + key).classed('selected', true)
+    selectedGene = key;
+  }
+
+  dispatcher.call('dotToLine', gene, gene.__data__);
+  dispatcher.call('dotToHeat', gene, gene.__data__);
 }

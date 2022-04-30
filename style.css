@@ -143,6 +143,11 @@ circle.invisible {
 	position: relative;
 	display: inline-block;
   }
+
+  ::placeholder {
+	color: lightgray;
+	opacity: 1;
+  }
   
   /* inside of dropdown menu */
   /*

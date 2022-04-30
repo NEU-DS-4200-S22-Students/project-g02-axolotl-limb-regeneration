@@ -37,6 +37,19 @@
       // run the updateChart function with this selected option
       dotVis.filter(selectedOption);
     })
+
+    let genes = []
+    for(var i = 0; i < data.length; i++) {
+      genes.push(data[i]['axolotl_gene'])
+    }
+
+    d3.select("#axolotlselect").on("click", function() {
+      geneName = document.getElementById('axolotlsearch').value;
+      console.log(geneName)
+      if(genes.includes(geneName)) {
+        dotVis.select(geneName);
+      }
+    })
   });
 
 })());
