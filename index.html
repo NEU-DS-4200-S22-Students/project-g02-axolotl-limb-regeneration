@@ -86,19 +86,26 @@
   </div>
 
   <!-- Drop down menu --> 
-  <div class="dropdown">
-    <select class="dropbtn" id='categoryButton'>
-      <option value="0">All Genes</option>
-      <option value="1">Cluster 1</option>
-      <option value="2">Cluster 2</option>
-      <option value="3">Cluster 3</option>
-      <option value="4">Cluster 4</option>
-      <option value="5">Cluster 5</option>
-      <option value="6">Cluster 6</option>
-    </select>
-        Cluster Expression Trend:
-    <img src="img/allgenes.PNG" width = "700" height = "15" id="expression" alt="cluster expression trend">
-  </div>
+  <div>
+    <div class="dropdown">
+      <select class="dropbtn" id='categoryButton'>
+        <option value="0">All Genes</option>
+        <option value="1">Cluster 1</option>
+        <option value="2">Cluster 2</option>
+        <option value="3">Cluster 3</option>
+        <option value="4">Cluster 4</option>
+        <option value="5">Cluster 5</option>
+        <option value="6">Cluster 6</option>
+      </select>
+      Cluster Expression Trend: 
+      <svg id='controls' width="720" height="55">
+        <text x="285" y="15" font-size="15">Days Since Amputation</text>
+        <image href="img/allgenes.png" width = "700" height = "15" x = 10 y = 40 preserveAspectRatio="none" id="expression">
+      </svg>
+      Expression Scale:
+      <img src="img/scale.png" width="300" height="30" alt="expression scale"
+    </div>
+</div>
   
   <!-- Visualization goes here -->
   <div class='vis-holder' id='dot-holder'>
@@ -106,7 +113,7 @@
   </div>
   <div class='vis-holder'>
     <svg id='line' preserveAspectRatio='xMidYMid meet' viewBox="0 0 700 350" class='line-svg'></svg>
-    <svg id='controls' preserveAspectRatio='xMidYMid meet' viewBox="0 0 300 350" class='control-svg'></svg>
+    <svg id='extra' preserveAspectRatio='xMidYMid meet' viewBox="0 0 300 350" class='control-svg'></svg>
   </div>
   <div class='vis-holder' id='heat-holder'>
     <svg id='heat' preserveAspectRatio='xMidYMid meet' viewBox="0 0 1000 450" class='vis-svg'></svg>

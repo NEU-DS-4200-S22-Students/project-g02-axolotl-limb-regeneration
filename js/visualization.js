@@ -13,12 +13,23 @@
     dotVis.selectionDispatcher().on('dotToLine', lineVis.updateSelection);
     dotVis.selectionDispatcher().on('dotToHeat', heatVis.updateSelection);
 
-    let options = {0: 'img/allgenes.PNG', 1: 'img/cluster1.PNG', 2: 'img/cluster2.PNG', 3: 'img/cluster3.PNG', 4: 'img/cluster4.PNG', 5: 'img/cluster5.PNG', 6: 'img/cluster6.PNG'}
+    let axis = d3.scaleBand()
+    .range([0, 700])
+    .domain([0,1,2,4,7,10,20,26,28])
+    .padding(-1);
+    d3.select("#controls").append('g')
+      .style('font-size', 12)
+      .attr('transform', 'translate(10, 40)')
+      .call(d3.axisTop(axis));
+
+    let options = {0: 'img/allgenes.png', 1: 'img/cluster1.png', 2: 'img/cluster2.png', 3: 'img/cluster3.png', 4: 'img/cluster4.png', 5: 'img/cluster5.png', 6: 'img/cluster6.png'}
     
     let updateImage = function(option) {
       image = options[option];
       console.log(image);
-      document.getElementById('expression').src = image;
+      document.getElementById('expression').setAttribute('href', image);
+      
+      console.log(document.getElementById('expression').href);
     }
 
     d3.select("#categoryButton").on("change", function(d) {

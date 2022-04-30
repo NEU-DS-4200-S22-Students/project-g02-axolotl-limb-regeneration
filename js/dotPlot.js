@@ -58,7 +58,7 @@ function dotPlot(data) {
 
   // adding a divergent color scale
   let colors = d3.scaleSequential(d3.interpolateRdBu)
-    .domain([-8, 8]);
+    .domain([8, -8]);
    
   // creating a chart title 
   svg.append('text')
@@ -121,7 +121,7 @@ function dotPlot(data) {
   resetChart = function() {
     xScale.domain(x0);
     yScale.domain(y0);
-    filterCategories(category);
+    renderData(filterCategories())
     transitionChart();
   }
 
@@ -186,29 +186,45 @@ function dotPlot(data) {
   }
 
   // creating dots on the plot
-  chartGroupDot 
-    .selectAll('circle')
-      .data(data)
-    .enter()
-    .append('circle')
-      .attr('id', d => d.key)
-      .attr('cx', d => xScale(d.LFC))
-      .attr('cy', d => yScale(d.LME))
-      .attr('fill', d => colors(d.LFC))
-      .attr('r', 3)
-      .style('stroke', 'gray')
-    .on('click', click)
-    .on("mouseover", mouseover)
-    .on("mousemove", mousemove)
-    .on("mouseleave", mouseleave)
+  let renderData = function(selectedData) {
+    d3.selectAll('circle').remove();
+    chartGroupDot 
+      .selectAll('circle')
+        .data(selectedData)
+      .enter()
+      .append('circle')
+        .attr('id', d => d.key)
+        .attr('cx', d => xScale(d.LFC))
+        .attr('cy', d => yScale(d.LME))
+        .attr('fill', d => colors(d.LFC))
+        .attr('r', 3)
+        .style('stroke', 'gray')
+      .on('click', click)
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave)
+  }
+  renderData(data)
 
   let filterCategories = function() {
+    if (category == 0) {
+      return data;
+    }
+    let selectedData = []
+    for(var i = 0; i < data.length; i++) {
+      gene = data[i]
+      if (gene['cluster'] == category) {
+        selectedData.push(gene);
+      };
+    }
+    return selectedData;
+    /*
     chartGroupDot.selectAll('circle').classed('invisible', function(d) {
       if (category == 0) {
         return false;
       }
       return !(category == d.cluster);
-    })
+    })*/
   }
 /*
 // filtering points based on categories 

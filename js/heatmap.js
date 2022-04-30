@@ -9,7 +9,7 @@ let xGroups = ['D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10',
 
 // function that creates the heatmap 
 function heatmap(data) {
-  let margin = {top: 10, left: 150, right: 30, bottom: 40},
+  let margin = {top: 10, left: 180, right: 30, bottom: 40},
   width = 700;
   height = 400;
 
@@ -41,7 +41,7 @@ function heatmap(data) {
 
   // color scale from: https://github.com/d3/d3-scale-chromatic
   colors = d3.scaleSequential(d3.interpolateRdBu)
-    .domain([-12, 12]);
+    .domain([12, -12]);
 
   // create a tooltip
   var tooltip = d3.select('#heat-holder')
