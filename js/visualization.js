@@ -26,10 +26,7 @@
     
     let updateImage = function(option) {
       image = options[option];
-      console.log(image);
       document.getElementById('expression').setAttribute('href', image);
-      
-      console.log(document.getElementById('expression').href);
     }
 
     d3.select("#categoryButton").on("change", function(d) {
