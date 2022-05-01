@@ -48,7 +48,8 @@
       console.log(geneName)
       if (genes.includes(geneName)) {
         document.getElementById("searchmessage").innerText = "";
-        dotVis.select(geneName);
+        geneData = data[genes.indexOf(geneName)];
+        dotVis.select(geneData);
       }
       else {
         document.getElementById("searchmessage").innerText = "\u2003No gene with this name";

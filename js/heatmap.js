@@ -65,10 +65,15 @@ function heatmap(data) {
       .style('stroke', 'none');
   };
 
+  let genes = []
+  for(var i = 0; i < data.length; i++) {
+    genes.push(data[i]['axolotl_gene'])
+  }
+
   click = function(d) {
     tooltip.style('opacity', 0);
-    index = currentData.indexOf(d3.select('#' + d.target.id)._groups[0][0].__data__);
-    currentData.splice(index, 1);
+    geneData = data[genes.indexOf(d.target.id)];
+    currentData.splice(currentData.indexOf(geneData), 1);
     renderHeat(currentData);
   }
   

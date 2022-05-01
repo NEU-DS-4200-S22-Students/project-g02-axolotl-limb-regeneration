@@ -283,16 +283,17 @@ dotPlot.filter = function(selection) {
   resetChart();
 }
 
-dotPlot.select = function(key) {
-  gene = document.getElementById(key)
-  if (getComputedStyle(gene).opacity != 0) {
-    if (selectedPoint != null) {
-      selectedPoint.classed('selected', false)
-    }
-    selectedPoint = d3.select('#' + key).classed('selected', true)
-    selectedGene = key;
+dotPlot.select = function(geneData) {
+  gene = geneData.axolotl_gene;
+  //gene = document.getElementById(key)
+  //if (getComputedStyle(gene).opacity != 0) {
+  if (selectedPoint != null) {
+    selectedPoint.classed('selected', false)
   }
-  updateInfo(selectedPoint._groups[0][0].__data__);
-  dispatcher.call('dotToLine', gene, gene.__data__);
-  dispatcher.call('dotToHeat', gene, gene.__data__);
+  selectedPoint = d3.select('#' + gene).classed('selected', true)
+  selectedGene = gene;
+  //}
+  updateInfo(geneData);
+  dispatcher.call('dotToLine', gene, geneData);
+  dispatcher.call('dotToHeat', gene, geneData);
 }
