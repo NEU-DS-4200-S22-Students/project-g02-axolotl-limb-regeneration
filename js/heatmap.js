@@ -66,7 +66,7 @@ function heatmap(data) {
   };
 
   let genes = []
-  for(var i = 0; i < data.length; i++) {
+  for(let i = 0; i < data.length; i++) {
     genes.push(data[i]['axolotl_gene'])
   }
 
@@ -99,21 +99,19 @@ function heatmap(data) {
   };
 
   renderHeat = function(data) {
-    var [yGroups, newData] = getDataHeat(data);
+    let [yGroups, newData] = getDataHeat(data);
     yScaleHeat.domain(yGroups);
-    var newYAxis = d3.axisLeft(yScaleHeat);
+    let newYAxis = d3.axisLeft(yScaleHeat);
     svgHeat.selectAll('.y.axis').remove();
     svgHeat.append('g')
       .attr('class', 'y axis')
       .style('font-size', 12)
       .call(newYAxis)
       .select('.domain').remove();
-    //svgHeat.selectAll('.y.axis').transition().duration(1500).call(newYAxis);
     svgHeat.selectAll('.heat').remove();
     svgHeat.selectAll('.heat').data(newData, function(d) {return d.x + ':' + d.y;})
       .enter()
       .append('rect')
-        //.transition().duration(1500)
         .attr('class', 'heat')
         .attr('id', function(d) {return d.y.split('/')[1];})
         .attr('x', function(d) {return xScaleHeat(parseFloat(d.x.substring(1)));})

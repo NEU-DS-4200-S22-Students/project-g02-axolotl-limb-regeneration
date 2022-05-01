@@ -220,7 +220,7 @@ function dotPlot(data) {
       return data;
     }
     let selectedData = []
-    for(var i = 0; i < data.length; i++) {
+    for(let i = 0; i < data.length; i++) {
       gene = data[i]
       if (gene['cluster'] == category) {
         selectedData.push(gene);

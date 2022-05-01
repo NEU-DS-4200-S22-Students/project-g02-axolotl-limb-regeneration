@@ -1,7 +1,7 @@
 // Pulling all data from the csv file
 //d3.csv('data/modified_pc.csv').then(lineChart);
 
-let yScale, line, chartGroup;
+let render;
 
 function lineChart(data) {
   // defining margins
@@ -23,7 +23,7 @@ function lineChart(data) {
       .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '))
 
   // creating an svg group to hold the chart elements
-  chartGroup = svg
+  let chartGroup = svg
     .append('g')
       .attr('transform', 'translate(' + margin.left +', ' + margin.top + ')');
 
@@ -42,7 +42,7 @@ function lineChart(data) {
     .call(xAxis)
 
   // creating a y scale
-  yScale = d3.scaleLinear()
+  let yScale = d3.scaleLinear()
     .domain([0, 0])
     .range([height, 0]);
 
@@ -52,7 +52,7 @@ function lineChart(data) {
     .style('font-size', 14)
     .call(d3.axisLeft(yScale));
 
-  line = d3.line()
+  let line = d3.line()
     .curve(d3.curveMonotoneX)
     .x(function(d){return xScale(d.x);})
     .y(function(d){return yScale(d.y);});
@@ -80,34 +80,34 @@ function lineChart(data) {
     .attr('class', 'ylabel')
     .text('Relative Gene Expression');
 
-  return lineChart;
-}
-
-function getData(data) {
-  let xLabels = ['D0', 'D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
-    'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28'];
-  let xValues = [0, 0.5, 1, 1.5, 2, 3, 4, 5, 7, 9, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
-  var max = 0;
-  var xy = [];
-  for(var i = 0; i < xLabels.length; i++ ) {
-    yvalue = data[xLabels[i]]
-    xy.push({x: xValues[i], y: yvalue});
-    if(parseInt(yvalue) > max) {
-      max = parseInt(yvalue);
+  function getData(data) {
+    let xLabels = ['D0', 'D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
+      'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28'];
+    let xValues = [0, 0.5, 1, 1.5, 2, 3, 4, 5, 7, 9, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28];
+    let max = 0;
+    let xy = [];
+    for(let i = 0; i < xLabels.length; i++ ) {
+      yvalue = data[xLabels[i]]
+      xy.push({x: xValues[i], y: yvalue});
+      if(parseInt(yvalue) > max) {
+        max = parseInt(yvalue);
+      }
     }
+    return [max + 1, xy]
   }
-  return [max + 1, xy]
-}
+    
+  render = function(data) {
+    let [max, newData] = getData(data);
+    yScale.domain([0, max]);
+    let newYAxis = d3.axisLeft(yScale);
+    chartGroup.selectAll('.y.axis').transition().duration(1500).call(newYAxis);
+    let lines = chartGroup.selectAll('.line').data(newData).attr('class', 'line');
+    lines.transition().duration(1500)
+      .attr('d', line(newData))
+      .style('stroke', 'black');
+  }
 
-function render(data) {
-  var [max, newData] = getData(data);
-  yScale.domain([0, max]);
-  var newYAxis = d3.axisLeft(yScale);
-  chartGroup.selectAll('.y.axis').transition().duration(1500).call(newYAxis);
-  var lines = chartGroup.selectAll('.line').data(newData).attr('class', 'line');
-  lines.transition().duration(1500)
-    .attr('d', line(newData))
-    .style('stroke', 'black');
+  return lineChart;
 }
 
 lineChart.updateSelection = function (selectedData) {

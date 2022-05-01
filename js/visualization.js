@@ -6,46 +6,45 @@
 
     let dispatch = d3.dispatch('dotToLine', 'dotToHeat');
 
-    let dotVis = dotPlot(data)
-      .selectionDispatcher(dispatch);
+    let dotVis = dotPlot(data).selectionDispatcher(dispatch);
     let lineVis = lineChart(data);
     let heatVis = heatmap(data);
     dotVis.selectionDispatcher().on('dotToLine', lineVis.updateSelection);
     dotVis.selectionDispatcher().on('dotToHeat', heatVis.updateSelection);
 
     let axis = d3.scaleBand()
-    .range([0, 700])
-    .domain([0,1,2,4,7,10,20,26,28])
-    .padding(-1);
+      .range([0, 700])
+      .domain([0,1,2,4,7,10,20,26,28])
+      .padding(-1);
+      
     d3.select("#controls").append('g')
       .style('font-size', 12)
       .attr('transform', 'translate(10, 40)')
       .call(d3.axisTop(axis));
 
-    let options = {0: 'img/allgenes.png', 1: 'img/cluster1.png', 2: 'img/cluster2.png', 3: 'img/cluster3.png', 4: 'img/cluster4.png', 5: 'img/cluster5.png', 6: 'img/cluster6.png'}
+    let options = {0: 'img/allgenes.png', 1: 'img/cluster1.png', 2: 'img/cluster2.png', 3: 'img/cluster3.png', 4: 'img/cluster4.png', 5: 'img/cluster5.png', 6: 'img/cluster6.png'};
     
     let updateImage = function(option) {
       image = options[option];
       document.getElementById('expression').setAttribute('href', image);
-    }
+    };
 
     d3.select("#categoryButton").on("change", function(d) {
       // recover the option that has been chosen
-      var selectedOption = d3.select(this).property("value")
+      let selectedOption = d3.select(this).property("value");
       // update the expression trend image
       updateImage(selectedOption);
       // run the updateChart function with this selected option
       dotVis.filter(selectedOption);
-    })
+    });
 
-    let genes = []
-    for(var i = 0; i < data.length; i++) {
-      genes.push(data[i]['axolotl_gene'])
-    }
+    let genes = [];
+    for(let i = 0; i < data.length; i++) {
+      genes.push(data[i]['axolotl_gene']);
+    };
 
     d3.select("#axolotlselect").on("click", function() {
       geneName = document.getElementById('axolotlsearch').value;
-      console.log(geneName)
       if (genes.includes(geneName)) {
         document.getElementById("searchmessage").innerText = "";
         geneData = data[genes.indexOf(geneName)];
@@ -53,8 +52,8 @@
       }
       else {
         document.getElementById("searchmessage").innerText = "\u2003No gene with this name";
-      }
-    })
+      };
+    });
 
     d3.select("#reset-heat").on("click", function() {
       heatVis.reset();
