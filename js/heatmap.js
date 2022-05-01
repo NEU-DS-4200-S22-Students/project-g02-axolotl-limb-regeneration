@@ -5,7 +5,7 @@ let xGroups = ['D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10',
     xValues = [0.5, 1, 1.5, 2, 3, 4, 5, 7, 9, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28],
     yScaleHeat, svgHeat, xScaleHeat, colors,
     currentData = [],
-    mouseover, mousemove, mouseleave;
+    mouseover, mousemove, mouseleave, click;
 
 // function that creates the heatmap 
 function heatmap(data) {
@@ -55,7 +55,7 @@ function heatmap(data) {
       .style('stroke', 'black');
   };
   mousemove = function(event, d) {
-    tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z.toFixed(2))
+    tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z.toFixed(2) + '<br>Click to remove this gene')
       .style('left', (event.pageX + 10) + 'px')
       .style('top', (event.pageY + 25) + 'px');
   };
@@ -64,6 +64,12 @@ function heatmap(data) {
     d3.select(this)
       .style('stroke', 'none');
   };
+
+  click = function(d) {
+    tooltip.style('opacity', 0);
+    currentData.splice(currentData.indexOf(d), 1);
+    renderHeat(currentData);
+  }
   
   svgHeat.append('text')
     .attr('x', (width) / 2)
@@ -74,6 +80,7 @@ function heatmap(data) {
 
   return heatmap;
 };
+
 function getDataHeat(data) {
   var xyz = [];
   var yGroups = [];
@@ -105,6 +112,7 @@ function renderHeat(data) {
     .append('rect')
       //.transition().duration(1500)
       .attr('class', 'heat')
+      .attr('id', 'brown')
       .attr('x', function(d) {return xScaleHeat(parseFloat(d.x.substring(1)));})
       .attr('y', function(d) {return yScaleHeat(d.y);})
       .attr('rx', 4)
@@ -118,6 +126,7 @@ function renderHeat(data) {
     .on("mouseover", mouseover)
     .on("mousemove", mousemove)
     .on("mouseleave", mouseleave)
+    .on("click", click);
 };
 
 heatmap.updateSelection = function (selectedData) {

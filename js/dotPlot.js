@@ -168,6 +168,7 @@ function dotPlot(data) {
       selectedPoint = d3.select(this).classed('selected', true)
       selectedGene = this.id;
       updateInfo(this.__data__);
+      
       dispatcher.call('dotToLine', this, this.__data__);
       dispatcher.call('dotToHeat', this, this.__data__);
     }
@@ -236,8 +237,9 @@ function dotPlot(data) {
 
   updateInfo = function(info) {
     document.getElementById("axolotltext").innerText = "Axolotl Gene: " + info.axolotl_gene;
-    document.getElementById("humantext").innerText = info.human_gene;
-    document.getElementById("lfctext").innerText = parseFloat(info.LFC).toFixed(2);
+    document.getElementById("humantext").innerText = "\u2003Human Gene: " + info.human_gene
+    document.getElementById("lfctext").innerText = "\u2003LFC Relative to Baseline: " + parseFloat(info.LFC).toFixed(2);
+    document.getElementById("searchmessage").innerText = "";
   }
 /*
 // filtering points based on categories 
