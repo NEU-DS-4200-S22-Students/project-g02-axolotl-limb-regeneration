@@ -51,7 +51,7 @@
         dotVis.select(geneName);
       }
       else {
-        document.getElementById("searchmessage").innerText = "No gene with this name";
+        document.getElementById("searchmessage").innerText = "\u2003No gene with this name";
       }
     })
   });
