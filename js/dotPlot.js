@@ -1,6 +1,6 @@
 
 // defining a dispatcher to carry the information for the most recent selected point
-let dispatcher, selectedPoint, selectedGene, resetChart, category = 0;
+let dispatcher, selectedPoint, selectedGene, resetChart, updateInfo, category = 0;
 
 // Creating a function to create dot plot
 function dotPlot(data) {
@@ -167,6 +167,7 @@ function dotPlot(data) {
       }
       selectedPoint = d3.select(this).classed('selected', true)
       selectedGene = this.id;
+      updateInfo(this.__data__);
       dispatcher.call('dotToLine', this, this.__data__);
       dispatcher.call('dotToHeat', this, this.__data__);
     }
@@ -232,6 +233,12 @@ function dotPlot(data) {
       return !(category == d.cluster);
     })*/
   }
+
+  updateInfo = function(info) {
+    document.getElementById("axolotltext").innerText = info.axolotl_gene;
+    document.getElementById("humantext").innerText = info.human_gene;
+    document.getElementById("lfctext").innerText = parseFloat(info.LFC).toFixed(2);
+  }
 /*
 // filtering points based on categories 
 function filterPoints() {
@@ -283,7 +290,7 @@ dotPlot.select = function(key) {
     selectedPoint = d3.select('#' + key).classed('selected', true)
     selectedGene = key;
   }
-
+  updateInfo(selectedPoint._groups[0][0].__data__);
   dispatcher.call('dotToLine', gene, gene.__data__);
   dispatcher.call('dotToHeat', gene, gene.__data__);
 }

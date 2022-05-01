@@ -46,8 +46,12 @@
     d3.select("#axolotlselect").on("click", function() {
       geneName = document.getElementById('axolotlsearch').value;
       console.log(geneName)
-      if(genes.includes(geneName)) {
+      if (genes.includes(geneName)) {
+        document.getElementById("searchmessage").innerText = "";
         dotVis.select(geneName);
+      }
+      else {
+        document.getElementById("searchmessage").innerText = "No gene with this name";
       }
     })
   });
