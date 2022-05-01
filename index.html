@@ -86,24 +86,24 @@
   </div>
 
   <!-- Drop down menu --> 
-    <div class="dropdown">
-      <select class="dropbtn" id='categoryButton'>
-        <option value="0">All Genes</option>
-        <option value="1">Cluster 1</option>
-        <option value="2">Cluster 2</option>
-        <option value="3">Cluster 3</option>
-        <option value="4">Cluster 4</option>
-        <option value="5">Cluster 5</option>
-        <option value="6">Cluster 6</option>
-      </select>
-      &emsp;Cluster Expression Trend: 
-      <svg id='controls' width="720" height="55">
-        <text x="285" y="15" font-size="15">Days Since Amputation</text>
-        <image href="img/allgenes.png" width = "700" height = "15" x = 10 y = 40 preserveAspectRatio="none" id="expression"></image>
-      </svg>
-      &emsp;Expression Scale:
-      <img src="img/scale.png" width="300" height="30" alt="expression scale">
-    </div>
+  <div class="dropdown">
+    <select class="dropbtn" id='categoryButton'>
+      <option value="0">All Genes</option>
+      <option value="1">Cluster 1</option>
+      <option value="2">Cluster 2</option>
+      <option value="3">Cluster 3</option>
+      <option value="4">Cluster 4</option>
+      <option value="5">Cluster 5</option>
+      <option value="6">Cluster 6</option>
+    </select>
+    &emsp;Cluster Expression Trend: 
+    <svg id='controls' width="720" height="55">
+      <text x="285" y="15" font-size="15">Days Since Amputation</text>
+      <image href="img/allgenes.png" width = "700" height = "15" x = 10 y = 40 preserveAspectRatio="none" id="expression"></image>
+    </svg>
+    &emsp;Expression Scale:
+    <img src="img/scale.png" width="300" height="30" alt="expression scale">
+  </div>
   
   <!-- Visualization goes here -->
   <div class='vis-holder' id='dot-holder'>
@@ -120,15 +120,14 @@
       <input class='dropbtn' id="axolotlsearch" type="text" size = 25 placeholder="Axoltol gene (ex. axo06854-f_at)">
       <button class='dropbtn' id="axolotlselect" type="submit">Search</button><br>
       <p id="searchmessage"></p>
+      <button class='dropbtn' id="reset-heat">Reset Heatmap</button>
     </div>
   </div>
+  <h3>Heatmap of Gene Expression</h3>
   <div class='vis-holder' id='heat-holder'>
     <svg id='heat' preserveAspectRatio='xMidYMid meet' viewBox="0 0 1000 450" class='vis-svg'></svg>
   </div>
   
-  <div class="reset-button">
-    <button onclick="resetHeatmap()">Reset</button>
-  </div>
 
   <!-- Further writeup -->
   <div class='content-column'>
@@ -189,15 +188,6 @@
         Scatterplot with grid, tooltip and filter </a> 
       by Matthieu Viry was used to learn how to filter a scatterplot based on a selection. 
       </li>
-
-      <li><a href = 'https://stackoverflow.com/questions/22452112/nvd3-clear-svg-before-loading-new-chart
-        '>
-        Clear svg before loading new chart answer on Stack Overflow </a> 
-      by Lars Kotthoff explained how to select all elements below an svg using: "svg > *", which 
-      was used to clear the heatmap. 
-      </li>
-
-
     
     </ul>
   </div>

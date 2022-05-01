@@ -5,8 +5,14 @@ body {
 	sans-serif;
 }
 
-h1, h2, h3 {
+h1, h2 {
 	line-height: 1.2
+}
+
+h3 {
+	line-height: 1.2;
+	text-align: center;
+	margin-bottom: 0px;
 }
 
 /* Your text should be in a nice narrow column */

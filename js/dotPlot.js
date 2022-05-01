@@ -1,6 +1,6 @@
 
 // defining a dispatcher to carry the information for the most recent selected point
-let dispatcher, selectedPoint, selectedGene, resetChart, updateInfo, category = 0;
+let dispatcher, selectedPoint, selectedGene, resetChart, update, category = 0;
 
 // Creating a function to create dot plot
 function dotPlot(data) {
@@ -167,7 +167,7 @@ function dotPlot(data) {
       }
       selectedPoint = d3.select(this).classed('selected', true)
       selectedGene = this.id;
-      updateInfo(this.__data__);
+      update(this.__data__);
       
       dispatcher.call('dotToLine', this, this.__data__);
       dispatcher.call('dotToHeat', this, this.__data__);
@@ -212,6 +212,7 @@ function dotPlot(data) {
       .on("mousemove", mousemove)
       .on("mouseleave", mouseleave)
   }
+
   renderData(data)
 
   let filterCategories = function() {
@@ -235,11 +236,13 @@ function dotPlot(data) {
     })*/
   }
 
-  updateInfo = function(info) {
+  update = function(info) {
     document.getElementById("axolotltext").innerText = "Axolotl Gene: " + info.axolotl_gene;
     document.getElementById("humantext").innerText = "\u2003Human Gene: " + info.human_gene
     document.getElementById("lfctext").innerText = "\u2003LFC Relative to Baseline: " + parseFloat(info.LFC).toFixed(2);
     document.getElementById("searchmessage").innerText = "";
+    dispatcher.call('dotToLine', info.axolotl_gene, info);
+    dispatcher.call('dotToHeat', info.axolotl_gene, info);
   }
 /*
 // filtering points based on categories 
@@ -285,15 +288,10 @@ dotPlot.filter = function(selection) {
 
 dotPlot.select = function(geneData) {
   gene = geneData.axolotl_gene;
-  //gene = document.getElementById(key)
-  //if (getComputedStyle(gene).opacity != 0) {
   if (selectedPoint != null) {
     selectedPoint.classed('selected', false)
   }
   selectedPoint = d3.select('#' + gene).classed('selected', true)
   selectedGene = gene;
-  //}
-  updateInfo(geneData);
-  dispatcher.call('dotToLine', gene, geneData);
-  dispatcher.call('dotToHeat', gene, geneData);
+  update(geneData);
 }

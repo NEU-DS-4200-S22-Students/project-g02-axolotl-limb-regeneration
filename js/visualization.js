@@ -55,6 +55,10 @@
         document.getElementById("searchmessage").innerText = "\u2003No gene with this name";
       }
     })
+
+    d3.select("#reset-heat").on("click", function() {
+      heatVis.reset();
+    });
   });
 
 })());
