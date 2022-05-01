@@ -21,6 +21,13 @@ function heatmap(data) {
       .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
+  // creating a chart title 
+  svgHeat.append('text')
+  .attr('x', width/2)
+  .attr('y', margin.top +2)
+  .attr('class', 'chartTitle')
+  .text('Heatmap of Genes');
+
   xScaleHeat = d3.scaleBand()
     .range([0, width])
     .domain(xValues)
