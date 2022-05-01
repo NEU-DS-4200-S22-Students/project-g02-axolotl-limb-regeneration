@@ -235,7 +235,7 @@ function dotPlot(data) {
   }
 
   updateInfo = function(info) {
-    document.getElementById("axolotltext").innerText = info.axolotl_gene;
+    document.getElementById("axolotltext").innerText = "Axolotl Gene: " + info.axolotl_gene;
     document.getElementById("humantext").innerText = info.human_gene;
     document.getElementById("lfctext").innerText = parseFloat(info.LFC).toFixed(2);
   }
