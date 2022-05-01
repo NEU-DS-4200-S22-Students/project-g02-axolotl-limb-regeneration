@@ -67,7 +67,8 @@ function heatmap(data) {
 
   click = function(d) {
     tooltip.style('opacity', 0);
-    currentData.splice(currentData.indexOf(d), 1);
+    index = currentData.indexOf(d3.select('#' + d.target.id)._groups[0][0].__data__);
+    currentData.splice(index, 1);
     renderHeat(currentData);
   }
   
@@ -112,7 +113,7 @@ function renderHeat(data) {
     .append('rect')
       //.transition().duration(1500)
       .attr('class', 'heat')
-      .attr('id', 'brown')
+      .attr('id', function(d) {return d.y.split('/')[1];})
       .attr('x', function(d) {return xScaleHeat(parseFloat(d.x.substring(1)));})
       .attr('y', function(d) {return yScaleHeat(d.y);})
       .attr('rx', 4)
@@ -131,6 +132,9 @@ function renderHeat(data) {
 
 heatmap.updateSelection = function (selectedData) {
   if (!arguments.length) return;
+  if (!currentData.includes(selectedData)) {
     currentData.push(selectedData);
     renderHeat(currentData);
+    console.log(currentData);
+  }
 };
