@@ -24,7 +24,7 @@ function heatmap(data) {
     .domain(xValues)
     .padding(0.05);
 
-  let xAxis = svgHeat.append('g')
+  svgHeat.append('g')
     .style('font-size', 12)
     .attr('transform', 'translate(0,' + height + ')')
     .call(d3.axisBottom(xScaleHeat).tickSize(0))
@@ -34,7 +34,7 @@ function heatmap(data) {
     .range([height, 0])
     .padding(0.05);
 
-  let yAxis = svgHeat.append('g')
+  svgHeat.append('g')
     .attr('class', 'y axis')
     .call(d3.axisLeft(yScaleHeat))
     .select('.domain').remove();
@@ -49,33 +49,33 @@ function heatmap(data) {
     .classed('tooltip', true);
 
   // Three function that change the tooltip when user hover / move / leave a cell
-  let mouseover = function(d) {
+  let mouseover = function(_) {
     tooltip.style('opacity', 1);
-    d3.select(this)
-      .style('stroke', 'black');
+    d3.select(this).style('stroke', 'black');
   };
+
   let mousemove = function(event, d) {
     tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z.toFixed(2) + '<br>Click to remove this gene')
       .style('left', (event.pageX + 10) + 'px')
       .style('top', (event.pageY + 25) + 'px');
   };
-  let mouseleave = function(d) {
+  
+  let mouseleave = function(_) {
     tooltip.style('opacity', 0);
-    d3.select(this)
-      .style('stroke', 'none');
+    d3.select(this).style('stroke', 'none');
   };
 
-  let genes = []
+  let genes = [];
   for(let i = 0; i < data.length; i++) {
-    genes.push(data[i]['axolotl_gene'])
-  }
+    genes.push(data[i]['axolotl_gene']);
+  };
 
   let click = function(d) {
     tooltip.style('opacity', 0);
     geneData = data[genes.indexOf(d.target.id)];
     currentData.splice(currentData.indexOf(geneData), 1);
     renderHeat(currentData);
-  }
+  };
   
   svgHeat.append('text')
     .attr('x', (width) / 2)
@@ -88,13 +88,13 @@ function heatmap(data) {
     let xyz = [];
     let yGroups = [];
     for(let i = 0; i < data.length; i++) {
-      gene = data[i]
-      yGroups.push(gene['human_gene'] + '/' + gene['axolotl_gene'])
+      gene = data[i];
+      yGroups.push(gene['human_gene'] + '/' + gene['axolotl_gene']);
       for(let j = 0; j < xGroups.length; j++) {
-        value = Math.log2(gene[xGroups[j]] / gene['D0'])
+        value = Math.log2(gene[xGroups[j]] / gene['D0']);
         xyz.push({x: xGroups[j], y: gene['human_gene'] + '/' + gene['axolotl_gene'], z: value});
-      }
-    }
+      };
+    };
     return [yGroups, xyz];
   };
 
@@ -136,12 +136,12 @@ function heatmap(data) {
 heatmap.reset = function() {
   currentData = [];
   renderHeat(currentData);
-} 
+} ;
 
 heatmap.updateSelection = function (selectedData) {
   if (!arguments.length) return;
   if (!currentData.includes(selectedData)) {
     currentData.push(selectedData);
     renderHeat(currentData);
-  }
+  };
 };
