@@ -135,6 +135,12 @@ function renderHeat(data) {
     .on("click", click);
 };
 
+function resetHeatmap(data) { 
+  d3.selectAll("#heat > *").remove();
+  currentData = [];
+  heatmap(data);
+} 
+
 heatmap.updateSelection = function (selectedData) {
   if (!arguments.length) return;
   if (!currentData.includes(selectedData)) {
