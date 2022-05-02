@@ -45,18 +45,19 @@ function lineChart(data) {
     .style('font-size', 14)
     .call(d3.axisLeft(yScale));
 
+  // creating the line based on x and y data elements
   let line = d3.line()
     .curve(d3.curveMonotoneX)
     .x(function(d){return xScale(d.x);})
     .y(function(d){return yScale(d.y);});
   
+  // formatting the line
   chartGroup.append('path')
     .attr('class', 'line')
     .attr('d', line(data['1']))
     .style('fill', 'none')
     .style('stroke', 'black')
     .style('stroke-width', 2);
-    
 
   // Adding x axis label
   chartGroup.append('text')
@@ -73,6 +74,7 @@ function lineChart(data) {
     .attr('class', 'ylabel')
     .text('Relative Gene Expression');
 
+  // creates an array with the x and y values and finds the maximum value for the y axis
   function getData(data) {
     let xLabels = ['D0', 'D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
       'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28'];
@@ -89,6 +91,8 @@ function lineChart(data) {
     return [max + 1, xy];
   };
     
+  // sets the y scale to match the maximum value and transitions to fit this scale
+  // plots the new line, transitioning from an old one if applicable
   render = function(data) {
     let [max, newData] = getData(data);
     yScale.domain([0, max]);
@@ -100,9 +104,11 @@ function lineChart(data) {
       .style('stroke', 'black');
   };
 
+  // executes all of the code for chart elements and interacivity above 
   return lineChart;
 };
 
+// updates the the chart with newly selected data from the volcano plot
 lineChart.updateSelection = function (selectedData) {
   if (!arguments.length) return;
   render(selectedData);
