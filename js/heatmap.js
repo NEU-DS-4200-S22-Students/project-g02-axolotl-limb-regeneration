@@ -4,8 +4,8 @@ let currentData = [], renderHeat;
 
 // function that creates the heatmap 
 function heatmap(data) {
-  let margin = {top: 0, left: 180, right: 30, bottom: 40},
-  width = 700;
+  let margin = {top: 0, left: 180, right: 0, bottom: 40},
+  width = 700,
   height = 400,
   xGroups = ['D0.5', 'D1', 'D1.5', 'D2', 'D3', 'D4', 'D5', 'D7', 'D9', 'D10', 
   'D12', 'D14', 'D16', 'D18', 'D20', 'D22', 'D24', 'D26', 'D28'],
@@ -59,7 +59,7 @@ function heatmap(data) {
       .style('left', (event.pageX + 10) + 'px')
       .style('top', (event.pageY + 25) + 'px');
   };
-  
+
   let mouseleave = function(_) {
     tooltip.style('opacity', 0);
     d3.select(this).style('stroke', 'none');
