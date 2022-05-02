@@ -143,7 +143,20 @@ function dotPlot(data) {
   let brush = d3.brush()
     .extent([[0,margin.top], [width - margin.left - margin.right, height - margin.top - margin.bottom]])
     .on("end", zoom);
-  chartGroupDot.call(brush);
+
+  // Modified from https://stackoverflow.com/questions/18036836/disable-clearing-of-d3-js-brush
+  // Gets the <g> the brush is created on
+  let brushElement = chartGroupDot.call(brush);
+
+  // store the original mousedown handler to use when we need it
+  let oldMousedown = brushElement.on('mousedown.brush');
+
+  // and replace it with our custom handler that doesn't trigger when circles are the mousedown targets
+  brushElement.on('mousedown.brush', function (event, d) {
+    if(event.target.nodeName !== "circle"){
+      oldMousedown.call(brushElement.node(), event);
+    }
+  })
 
   // creating a div container to hold the tool tips
   let tooltip = d3.select('#dot-holder')
@@ -153,7 +166,7 @@ function dotPlot(data) {
   // defines function for click event that colors the selected point green, 
   // returns the previous point to its assigned color, and
   // passes the data for the selected point to the line chart and heat map
-  let click = function(_){
+  let click = function(event, d){
       if (getComputedStyle(this).opacity == 0) {
         return;
       };
@@ -166,7 +179,7 @@ function dotPlot(data) {
     };
 
   // makes the tool tip visible while the mouse hovers over a point in the plot
-  let mouseover = function(_) {
+  let mouseover = function(event, d) {
     if (getComputedStyle(this).opacity != 0) {
       tooltip.style('opacity', 1);
     };
@@ -181,7 +194,7 @@ function dotPlot(data) {
   };
 
   // hides the tool tip when the mouse is not hovering over a point
-  let mouseleave = function(_) {
+  let mouseleave = function(event, d) {
     tooltip.style('opacity', 0);
   };
 
