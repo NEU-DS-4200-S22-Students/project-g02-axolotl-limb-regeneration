@@ -13,16 +13,15 @@ function lineChart(data) {
 
   //function chart(data) {
   let svg = d3.select('#line')
-      .append('svg')
-      .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of its parent element and the page.
-      .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
-      .style('background-color', 'white') // change the background color to light gray
-      .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '));
+    .append('svg')
+    .attr('preserveAspectRatio', 'xMidYMid meet') // this will scale your visualization according to the size of its parent element and the page.
+    .attr('width', '100%') // this is now required by Chrome to ensure the SVG shows up at all
+    .style('background-color', 'white') // change the background color to light gray
+    .attr('viewBox', [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom].join(' '));
 
   // creating an svg group to hold the chart elements
-  let chartGroup = svg
-    .append('g')
-      .attr('transform', 'translate(' + margin.left +', ' + margin.top + ')');
+  let chartGroup = svg.append('g')
+    .attr('transform', 'translate(' + margin.left +', ' + margin.top + ')');
 
   // creating a scale for the x axis
   let xScale = d3.scaleLinear()
@@ -30,12 +29,10 @@ function lineChart(data) {
     .range([0, width]);
  
   // drawing x axis
-  let xAxis = d3.axisBottom(xScale);
-  chartGroup
-    .append('g')
-      .attr('transform', 'translate(0,' + (height) + ')')
+  chartGroup.append('g')
+    .attr('transform', 'translate(0,' + (height) + ')')
     .style('font-size', 14)
-    .call(xAxis);
+    .call(d3.axisBottom(xScale));
 
   // creating a y scale
   let yScale = d3.scaleLinear()

@@ -39,12 +39,12 @@
     });
 
     let genes = [];
-    for(let i = 0; i < data.length; i++) {
+    for(i = 0; i < data.length; i++) {
       genes.push(data[i]['axolotl_gene']);
     };
 
     d3.select("#axolotlselect").on("click", function() {
-      geneName = document.getElementById('axolotlsearch').value;
+      geneName = document.getElementById('axolotlsearch').value.toLowerCase();
       if (genes.includes(geneName)) {
         document.getElementById("searchmessage").innerText = "";
         geneData = data[genes.indexOf(geneName)];
