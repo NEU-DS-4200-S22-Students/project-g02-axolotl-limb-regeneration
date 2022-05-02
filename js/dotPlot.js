@@ -79,6 +79,7 @@ function dotPlot(data) {
     .attr('class', 'ylabel')
     .text('Mean Gene Expression');
 
+  // setting these variables for double-clicking and brushing functionality
   let idleTimeout, idleDelay = 350;
 
   // function setting the idle timeout to null to use in zooming out
@@ -117,6 +118,8 @@ function dotPlot(data) {
     };
   };
 
+  // sets the x and y scales back to their original domains and 
+  // renders the data with the selected category
   resetChart = function() {
     xScale.domain(x0);
     yScale.domain(y0);
@@ -128,8 +131,10 @@ function dotPlot(data) {
     transitionChart();
   }
 
+  // calls the double click function to zoom out
   chartGroupDot.on("dblclick", resetChart);
 
+  // creates a transition of the chart to reflect the current event
   let transitionChart = function() {
     let transition = chartGroupDot.transition().duration(750);
     chartGroupDot.select(".x.axis").transition(transition).call(xAxis);
@@ -218,8 +223,10 @@ function dotPlot(data) {
       .on("mouseleave", mouseleave);
   };
 
+  // creates the points on the volcano plot
   renderData(data);
 
+  // function that subsets the data to only include points in the selected cluster 
   let filterCategories = function() {
     if (category == 0) {
       return data;
@@ -234,6 +241,8 @@ function dotPlot(data) {
     return selectedData;
   };
 
+  // updates the text labels for the human and axolotl gene names
+  // and passes the selected data to the line chart and heat map
   update = function(info) {
     document.getElementById("axolotltext").innerText = "Axolotl Gene: " + info.axolotl_gene;
     document.getElementById("humantext").innerText = "\u2003Human Gene: " + info.human_gene
@@ -243,6 +252,7 @@ function dotPlot(data) {
     dispatcher.call('dotToHeat', info.axolotl_gene, info);
   };
 
+  // runs entirety of code to create the volcanp plot and interactivity
   return dotPlot;
 };
 
@@ -251,11 +261,13 @@ dotPlot.selectionDispatcher = function (_) {
   dispatcher = _;
   return dotPlot;}
 
+// calls reset chart after assigning the currrent selected gene cluster
 dotPlot.filter = function(selection) {
   category = selection;
   resetChart();
 }
 
+// updates the selected point and its color and passes the current data to the update function 
 dotPlot.select = function(geneData) {
   gene = geneData.axolotl_gene;
   if (selectedPoint != null) {
