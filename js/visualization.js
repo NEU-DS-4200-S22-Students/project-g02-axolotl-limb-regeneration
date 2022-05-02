@@ -1,9 +1,9 @@
-// Immediately Invoked Function Expression to limit access to our 
-// variables and prevent 
 ((() => {
 
+  // calling in data and passing it to the charts
   d3.csv('data/LFC_transformed.csv').then(data => {
 
+    // defining dispatch events to transition from the volcano plot
     let dispatch = d3.dispatch('dotToLine', 'dotToHeat');
 
     let dotVis = dotPlot(data).selectionDispatcher(dispatch);
@@ -22,13 +22,16 @@
       .attr('transform', 'translate(10, 40)')
       .call(d3.axisTop(axis));
 
+    // the avaiable images of the cluster trends
     let options = {0: 'img/allgenes.png', 1: 'img/cluster1.png', 2: 'img/cluster2.png', 3: 'img/cluster3.png', 4: 'img/cluster4.png', 5: 'img/cluster5.png', 6: 'img/cluster6.png'};
     
+    // displays the image corresponding to the selected cluster
     let updateImage = function(option) {
       image = options[option];
       document.getElementById('expression').setAttribute('href', image);
     };
 
+    
     d3.select("#categoryButton").on("change", function(d) {
       // recover the option that has been chosen
       let selectedOption = d3.select(this).property("value");
