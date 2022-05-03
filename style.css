@@ -5,8 +5,14 @@ body {
 	sans-serif;
 }
 
-h1, h2, h3 {
+h1, h2 {
 	line-height: 1.2
+}
+
+h3 {
+	line-height: 1.2;
+	text-align: center;
+	margin-bottom: 0px;
 }
 
 /* Your text should be in a nice narrow column */
@@ -17,13 +23,48 @@ h1, h2, h3 {
 
 /* But your visualization should be full-width and full-height */
 .vis-holder {
-  width: 100%;
-  height: 100%;
-  display: flex;
+  	width: 100%;
+  	height: 100%;
+  	display: flex;
 }
 
 .vis-svg {
-  background-color: #f4f1f0;
+  	background-color: white;
+}
+
+.line-svg {
+  	flex: 0 0 70%;
+}
+
+.control.svg {
+  	flex: 1;
+}
+
+.expression {
+	width: 100%;
+	height: 80%;
+	display: flex;
+}
+
+div.tooltip {
+  	position: absolute;
+  	opacity: 0;
+  	background-color: white;
+  	border: 1px solid;
+  	border-radius: 5px;
+  	padding: 5px;
+  	font-size: 12px;
+}
+
+circle.selected {
+	fill: lightgreen;
+	opacity: 1;
+	stroke:  darkgreen;
+  	stroke-width: 1.5;
+}
+
+circle.invisible {
+  	opacity: 0;
 }
 
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
@@ -81,4 +122,39 @@ h1, h2, h3 {
 		-o-transform:rotate(45deg);
 		box-shadow:4px 4px 10px rgba(0,0,0,0.8);
 	}
+}
+
+/* formatting chart title */
+.chartTitle {
+	stroke: black;
+	font-size: 30px;
+	text-anchor: middle;
+}
+
+/*formatting y label*/
+.ylabel {
+	transform: rotate(270deg);
+}
+
+/* Dropdown Button */
+.button {
+	background-color: grey;
+	color: white;
+	padding: 5px;
+	font-size: 16px;
+}
+  
+/* positioning the dropdown */
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+::placeholder {
+	color: lightgray;
+	opacity: 1;
+}
+
+.dropdown:hover .dropbtn {
+	background-color: black;
 }

@@ -1,116 +1,217 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 
 <!-- Metadata -->
 
 <head>
-  <meta charset='utf-8'>
+  <meta charset="utf-8">
 
   <!-- Title -->
-  <title>G##: Topic, DS 4200 S22</title>
+  <title>G02: Alxolotl Limb Regeneration, DS 4200 S22</title>
 
   <!-- CSS Styling -->
-  <link rel='stylesheet' href='style.css'>
+  <link rel="stylesheet" href="style.css">
 
   <!-- Favicons -->
-  <link rel='apple-touch-icon' sizes='180x180' href='favicons/apple-touch-icon.png'>
-  <link rel='icon' type='image/png' sizes='32x32' href='favicons/favicon-32x32.png'>
-  <link rel='icon' type='image/png' sizes='16x16' href='favicons/favicon-16x16.png'>
-  <link rel='manifest' href='favicons/site.webmanifest'>
-  <link rel='shortcut icon' href='favicons/favicon.ico'>
-  <meta name='msapplication-TileColor' content='#da532c'>
-  <meta name='msapplication-config' content='favicons/browserconfig.xml'>
-  <meta name='theme-color' content='#ffffff'>
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 <!-- Main page content -->
 
 <body>
 
-  <!-- Update this with your GitHub repo URL -->
-  <span id='forkongithub'><a href='https://github.com/NEU-DS-4200-S22/Project'>Fork me on GitHub</a></span>
+  <!-- GitHub repo URL -->
+  <span id="forkongithub"><a href="https://github.com/NEU-DS-4200-S22-Students/project-g02-axolotl-limb-regeneration">Fork me on GitHub</a></span>
 
   <!-- Writeup -->
-  <div class='content-column'>
-    <h1>Project Group ##: Topic, DS 4200 S22</h1>
+  <div class="content-column">
+    <h1>Project Group 02 Axolotl Limb Regeneration, DS 4200 S22</h1>
 
-    <p><strong>Student One</strong>, <strong>Student Two</strong>, <strong>Student Three</strong></p>
+    <p><strong>Brian Huntley</strong>, <strong>Elliot Bangerter</strong>, <strong>Kelly Phalen</strong></p>
 
     <p>Service-Learning Course Project as part of
-      <a href='https://neu-ds-4200-s22.github.io/'>Ds 4200 S22 Information Presentation & Visualization</a>,
-      taught by <a href='https://cody.khoury.northeastern.edu/'>Prof. Cody Dunne</a>,
-      <a href='https://visualization.khoury.northeastern.edu/'>Data Visualization @ Khoury</a>,
-      <a href='https://www.khoury.northeastern.edu/'>Northeastern University</a>.
+      <a href="https://neu-ds-4200-s22.github.io/">Ds 4200 S22 Information Presentation & Visualization</a>,
+      taught by <a href="https://cody.khoury.northeastern.edu/">Prof. Cody Dunne</a>,
+      <a href="https://visualization.khoury.northeastern.edu/">Data Visualization @ Khoury</a>,
+      <a href="https://www.khoury.northeastern.edu/">Northeastern University</a>.
     </p>
 
 
     <h1>Abstract</h1>
 
-    <p>Include a brief writeup about your project.</p>
+    <p> 
+      The focus of this project is on the change of gene expression levels throughout the regeneration process of 
+      a salamander limb. We have acquired a dataset from James Monaghan containing gene expression levels from 20,000 
+      genes during the regeneration of axolotl limbs. The motivation behind this project is to create an interactive 
+      and queryable visualization that is easily digestive and  demonstrates significant trends in changes in gene 
+      expression. We hope to make the data and information from James Monaghan’s studies easier to understand to progress 
+      the fields of animal homeostasis and regenerative medicine. Current visualizations for this data can be difficult to comprehend
+      and explore since they are basic and lack a web-based or interactive component. We hope to aid scientists in their findings 
+      to further the knowledge about regenerative genes.
+      </p>
 
-
-    <h1>Visualization</h1>
-
-    <p>Include the interactive visualization as part of this page. Static example follows.</p>
-
-
-  </div>
-
-  <!-- Visualization goes here -->
-  <div class='vis-holder'>
-    <!-- Change viewbox to whatever you want, e.g., '0 0 1000 6000' This determines your aspect ratio and coordinate system -->
-    <!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
-    <svg id='vis-svg-1' preserveAspectRatio='xMidYMid meet' class='vis-svg' viewBox='0 0 1000 1000' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
-
-
-      <text x='30%' y='35%' text-anchor='middle'>A</text>
-      <text x='70%' y='35%' text-anchor='middle'>B</text>
-      <rect x='20%' y='40%' width='20%' height='20%' fill='yellow'></rect>
-      <circle cx='70%' cy='50%' r='10%' fill='blue'></circle>
-
-
-      <!-- Don't delete the closing tag! -->
-    </svg>
-  </div>
-
-  <!-- Further writeup -->
-  <div class='content-column'>
+    <h1>Data</h1>
+    <p>This Excel file contains all of the data for James Monaghan's study published in 2017 titled, 
+      “Transcriptional correlates of proximal-distal identify and regeneration timing in axolotl limbs.” 
+      The first sheet contains all of the gene expression data from day 0 to day 28 post amputation of 
+      the axolotl upper arm. The following sheets contain the different clusters of genes grouped by 
+      similar gene expression trends throughout the 28 day study. 
+    </p>
+    <a href= 'https://github.com/NEU-DS-4200-S22-Students/project-g02-axolotl-limb-regeneration/blob/gh-pages/data/Sheets_by_cluster.xlsx'>
+      Axolotl Limb Regeneration Dataset</a>
+    
+    <img src="img/limb_regeneration_img.jpg"
+      alt = "Axolotl Limb Regeneration Image"
+      width = "650"
+      height = "200">
 
     <h1>Visualization explanation</h1>
 
-    <p>Replace with a brief explanation and linked presentation slides.</p>
+    <p> Select a point on the dot plot (volcano plot) that represents a singular axolotl gene that corresponds to a human gene. 
+      The genes are arranged on the x axis based on their maximum change from the baseline day 0, prior to the removal of the limb. The y positions correspond to the mean gene expression as meadured for fluorescent probes. 
+      Darker colors represent more of a change, with blue representing a negative change or a decrease in gene expression
+      and red representing a positive change or an increase in gene expression. To zoom in on a gene or areas of genes, brush the area, 
+      and to zoom out, double click on the plot. 
+      <br>
+      The volcano plot can be filtered using the dropdown menu in order to group the genes into 6 different clusters.
+      The genes within each cluster follow similar expression trends; the overall trend is displayed above the plot once
+      the cluster is selected.  
+      <br>
+      When a point (gene) is selected, the corresponding line chart appears that shows the individual change in gene expression from 
+      day 0 to day 28 post amputation. The axolotl and human genes as well as the log fold change in gene expression appear to the right. 
+      A given axolotl gene can also be searched in the search bar, and its line chart will appear. 
+      <br>
+      When a point is selected, it turns green in color. Then, when a different point is selected, the previously selected point
+      changes back to its original color and the newly selected point turns greens. 
+      <br>
+      The heatmap is created by selecting a few different genes from the dot plot. Upon multiple selections of genes, the heatmap 
+      grows to include the relations of all of those genes. The human gene is displayed on the left side of the heatmap and the 
+      bottom displays the days since amputation. A gene of the heatmap can be removed by clicking on any box in that gene"s row. 
+      Additionally, the heatmap can be reset by clicking the reset heatmap button located under the search bar. 
+      <br>
+      <br>
+      <a href= "https://docs.google.com/presentation/d/1BjXGGaaLlynSgMfM3ltzdbWXBUme3062U0sz5iJNooQ/edit?usp=sharing">
+      Axolotl Limb Regeneration Presentation</a>
+    </p>
+
+    <h1>Visualization</h1>
+
+  </div>
+
+  <!-- Drop down menu --> 
+  <div class="dropdown">
+    <select class="button" id="categoryButton">
+      <option value="0">All Genes</option>
+      <option value="1">Cluster 1</option>
+      <option value="2">Cluster 2</option>
+      <option value="3">Cluster 3</option>
+      <option value="4">Cluster 4</option>
+      <option value="5">Cluster 5</option>
+      <option value="6">Cluster 6</option>
+    </select>
+    &emsp;Cluster Expression Trend: 
+    <svg id="trend" width="720" height="55">
+      <text x="285" y="15" font-size="15">Days Since Amputation</text>
+      <image href="img/allgenes.png" width = "700" height = "15" x = "10" y = "40" preserveAspectRatio="none" id="expression"></image>
+    </svg>
+    &emsp;Expression Scale:
+    <img src="img/scale.png" width="300" height="30" alt="expression scale">
+  </div>
+  
+  <!-- Visualization goes here -->
+  <div class="vis-holder" id="dot-holder">
+    <svg id="dot" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 400" class="vis-svg"></svg>
+  </div>
+  <div class="vis-holder">
+    <svg id="line" preserveAspectRatio="xMidYMid meet" viewBox="0 0 700 350" class="line-svg"></svg>
+    <div class="search-tools">
+      <h2 id="axolotltext">
+        Axolotl Gene:
+      </h2>
+      <p id="humantext">&emsp;Human Gene:</p>
+      <p id="lfctext">&emsp;Max LFC Relative to Baseline:</p>
+      <input class="button" id="axolotlsearch" type="text" size = "25" placeholder="Axoltol gene (ex. axo06854-f_at)">
+      <button class="button" id="axolotlselect" type="submit">Search</button><br>
+      <p id="searchmessage"></p>
+      <button class="button" id="reset-heat">Reset Heatmap</button>
+    </div>
+  </div>
+  <h3>Heatmap of Gene Expression</h3>
+  <div class="vis-holder" id="heat-holder">
+    <svg id="heat" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 450" class="vis-svg"></svg>
+  </div>
+  
+
+  <!-- Further writeup -->
+  <div class="content-column">
+
+    
 
     <h1>Demo Video</h1>
 
-    <p>Embed an MP4 demo video using the HTML5 &lt;video&gt; tag. For example, this screen recording Prof. Cody Dunne made of Mike Bostock's flexible transitions in D3 slide:</p>
-
-    <video controls width='100%'>
-      <source src='http://www.ccs.neu.edu/home/cody/courses/shared/d3-flexible-transitions.mp4' type='video/mp4'>
-      <p>Your browser doesn't support HTML5 video. Here is
-        a <a href='http://www.ccs.neu.edu/home/cody/courses/shared/d3-flexible-transitions.mp4'>link to the video</a> instead.</p>
+    <video controls width="100%">
+      <source src="files/webpage_demo.mp4" type="video/mp4">
+      <p>Your browser doesn"t support HTML5 video. Here is
+        a <a href="files/webpage_demo.mp4">link to the video</a> instead.</p>
     </video>
 
     <h1>Acknowledgments</h1>
 
-    <p>
-      List here where any code, packages/libraries, text, images, designs, etc. that you leverage come from.
-    </p>
-
     <ul>
-      <li><a href='https://d3js.org/'>
-          D3: Data-Driven Documents</a>
+      <li><a href="https://d3js.org/">
+        D3: Data-Driven Documents</a>
         by Mike Bostock is used for manipulating the DOM to create visualizations.
       </li>
-      <li><a href='https://codepo8.github.io/css-fork-on-github-ribbon/#'>
-          Pure CSS responsive 'Fork me on GitHub' ribbon</a>
+      <li><a href="https://codepo8.github.io/css-fork-on-github-ribbon/#">
+        Pure CSS responsive "Fork me on GitHub" ribbon</a>
         by Chris Heilmann is used to create the banner that links back to the source code repository.
       </li>
+      <li><a href="https://github.com/d3/d3-scale-chromatic/blob/v3.0.0/README.md#sequential-single-hue">
+        D3: Scale Chromatic</a>
+        by Mike Bostock was used for deciding a color scale and implementing it see dotPlot.js line 32. 
+      </li>
+      <li><a href="https://gist.github.com/bryanhanson/11344247">
+        Simple D3 Line</a>
+        by Bryan Hanson was used as a model to create our line chart using two arrays. 
+      </li>
+      <li><a href="https://jonsadka.com/blog/how-to-create-live-updating-and-flexible-d3-line-charts-using-pseudo-data">
+        Live Updating and Flexible D3 Linecharts</a>
+        by Jon Sadka was used to learn about creating transitions between lines.
+      </li>
+      <li><a href="https://d3-graph-gallery.com/graph/interactivity_brush.html">
+        D3 Graph Gallery: Brushing </a>
+      was used to learn how to zoom in when brushing. 
+      </li>
+      <li><a href="https://bl.ocks.org/mbostock/f48fcdb929a620ed97877e4678ab15e6">
+        Brush & Zoom II </a>
+      by Mike Bostock was used to learn how to zoom in when brushing. 
+      </li>
+      <li><a href = "https://www.w3schools.com/howto/howto_css_dropdown.asp">
+        How To- Hoverable Dropdown </a> 
+      by W3 Schools was used as a model for a dropdown menu. 
+      </li>
+
+      <li><a href = "https://bl.ocks.org/mthh/0e8fce303def3d2bf6603ad017369032">
+        Scatterplot with grid, tooltip and filter </a> 
+      by Matthieu Viry was used to learn how to filter a scatterplot based on a selection. 
+      </li>
+    
     </ul>
   </div>
 
   <!-- Scripts at the end avoid need for dealing with async, defer, or onload event handlers -->
-  <script src='lib/d3.v7.3.0/d3.js'></script>
-  <script src='js/visualization.js'></script>
+  <script src="lib/d3.v7.3.0/d3.js"></script>
+  <script src="js/dotPlot.js"></script>
+  <script src="js/lineChart.js"></script>
+  <script src="js/heatmap.js"></script>
+  <script src="js/visualization.js"></script>
 </body>
 
 </html>
