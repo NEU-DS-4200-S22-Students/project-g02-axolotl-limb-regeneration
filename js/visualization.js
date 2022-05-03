@@ -3,7 +3,7 @@
   // calling in data and passing it to the charts
   d3.csv('data/LFC_transformed.csv').then(data => {
 
-    // defining dispatch events to transition from the volcano plot
+    // defining dispatch events to transition from the volcano (dot) plot
     let dispatch = d3.dispatch('dotToLine', 'dotToHeat');
 
     // defining visualizations and adding their dispatch events
