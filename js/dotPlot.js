@@ -72,7 +72,7 @@ function dotPlot(data) {
     .attr('x', width/2)
     .attr('y', height - (margin.bottom/2))
     .style('text-anchor', 'middle')
-    .text('Log Fold Change in Gene Expression Relative to Baseline');
+    .text('Maximum Log Fold Change in Gene Expression Relative to Baseline');
 
   // Adding y axis label
   svg.append('text')

@@ -69,15 +69,15 @@
     
     <img src="img/limb_regeneration_img.jpg"
       alt = "Axolotl Limb Regeneration Image"
-      width = 650
-      height = 200>
+      width = "650"
+      height = "200">
 
     <h1>Visualization explanation</h1>
 
     <p> Select a point on the dot plot (volcano plot) that represents a singular axolotl gene that corresponds to a human gene. 
       The genes are arranged on the x axis based on their maximum change from the baseline day 0, prior to the removal of the limb. The y positions correspond to the mean gene expression as meadured for fluorescent probes. 
-      Darker colors represent more of a change, with red representing a negative change or a decrease in gene expression
-      and blue representing a positive change or an increase in gene expression. To zoom in on a gene or areas of genes, brush the area, 
+      Darker colors represent more of a change, with blue representing a negative change or a decrease in gene expression
+      and red representing a positive change or an increase in gene expression. To zoom in on a gene or areas of genes, brush the area, 
       and to zoom out, double click on the plot. 
       <br>
       The volcano plot can be filtered using the dropdown menu in order to group the genes into 6 different clusters.
@@ -119,7 +119,7 @@
     &emsp;Cluster Expression Trend: 
     <svg id="trend" width="720" height="55">
       <text x="285" y="15" font-size="15">Days Since Amputation</text>
-      <image href="img/allgenes.png" width = "700" height = "15" x = 10 y = 40 preserveAspectRatio="none" id="expression"></image>
+      <image href="img/allgenes.png" width = "700" height = "15" x = "10" y = "40" preserveAspectRatio="none" id="expression"></image>
     </svg>
     &emsp;Expression Scale:
     <img src="img/scale.png" width="300" height="30" alt="expression scale">
@@ -136,8 +136,8 @@
         Axolotl Gene:
       </h2>
       <p id="humantext">&emsp;Human Gene:</p>
-      <p id="lfctext">&emsp;LFC Relative to Baseline:</p>
-      <input class="button" id="axolotlsearch" type="text" size = 25 placeholder="Axoltol gene (ex. axo06854-f_at)">
+      <p id="lfctext">&emsp;Max LFC Relative to Baseline:</p>
+      <input class="button" id="axolotlsearch" type="text" size = "25" placeholder="Axoltol gene (ex. axo06854-f_at)">
       <button class="button" id="axolotlselect" type="submit">Search</button><br>
       <p id="searchmessage"></p>
       <button class="button" id="reset-heat">Reset Heatmap</button>
@@ -172,23 +172,23 @@
 
     <ul>
       <li><a href="https://d3js.org/">
-          D3: Data-Driven Documents</a>
+        D3: Data-Driven Documents</a>
         by Mike Bostock is used for manipulating the DOM to create visualizations.
       </li>
       <li><a href="https://codepo8.github.io/css-fork-on-github-ribbon/#">
-          Pure CSS responsive "Fork me on GitHub" ribbon</a>
+        Pure CSS responsive "Fork me on GitHub" ribbon</a>
         by Chris Heilmann is used to create the banner that links back to the source code repository.
       </li>
       <li><a href="https://github.com/d3/d3-scale-chromatic/blob/v3.0.0/README.md#sequential-single-hue">
-          D3: Scale Chromatic</a>
+        D3: Scale Chromatic</a>
         by Mike Bostock was used for deciding a color scale and implementing it see dotPlot.js line 32. 
       </li>
       <li><a href="https://gist.github.com/bryanhanson/11344247">
-          Simple D3 Line</a>
+        Simple D3 Line</a>
         by Bryan Hanson was used as a model to create our line chart using two arrays. 
       </li>
       <li><a href="https://jonsadka.com/blog/how-to-create-live-updating-and-flexible-d3-line-charts-using-pseudo-data">
-          Live Updating and Flexible D3 Linecharts</a>
+        Live Updating and Flexible D3 Linecharts</a>
         by Jon Sadka was used to learn about creating transitions between lines.
       </li>
       <li><a href="https://d3-graph-gallery.com/graph/interactivity_brush.html">
