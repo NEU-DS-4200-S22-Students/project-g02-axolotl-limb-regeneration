@@ -1,11 +1,11 @@
 
-// defining a dispatcher to carry the information for the most recent selected point
-let dispatcher, selectedPoint, selectedGene, resetChart, update, category = 0;
+// defining a dispatcher for dispatch events and defines functions for interactivity
+let dispatcher, filterDot, selectDot;
 
 // Creating a function to create dot plot
 function dotPlot(data) {
 
-  // defining margins
+  // defining margins and initial variables
   let margin = {
     top: 25,
     left: 50,
@@ -15,7 +15,10 @@ function dotPlot(data) {
   width = 950,
   height = 400,
   x0 = [-12,8],
-  y0 = [3,15];
+  y0 = [3,15],
+  selectedPoint,
+  selectedGene,
+  category = 0;
 
   // creating an svg to hold the contents of the dot plot
   let svg = d3.select('#dot')
@@ -25,7 +28,7 @@ function dotPlot(data) {
     .style('background-color', 'white') 
     .attr('viewBox', [0, 0, width, height].join(' '));
 
-  // creating an svg group for all of the points in the volcano plot
+  // creating an svg group for all of the points in the dot plot
   chartGroupDot = svg.append('g')
     .attr('transform', 'translate(' + margin.left +', ' + margin.top + ')');
       
@@ -98,7 +101,8 @@ function dotPlot(data) {
       xScale.domain(x0);
       yScale.domain(y0);
     } else {
-      chartGroupDot.selectAll("circle").classed('invisible', function(d){
+      // makes circles that are no within the visible domain after zooming invisible
+      chartGroupDot.selectAll('circle').classed('invisible', function(d){
         xLower = selected[0][0],
         xUpper = selected[1][0],
         yLower = selected[0][1],
@@ -111,6 +115,7 @@ function dotPlot(data) {
         };
         return (xScale(d.LFC) < xLower || xScale(d.LFC) > xUpper || yScale(d.LME) < yLower || yScale(d.LME) > yUpper || cluster);
       });
+      // updates the axis, resets the brush, and moves the points of the dot plot accordingly
       xScale.domain([selected[0][0], selected[1][0]].map(xScale.invert, xScale));
       yScale.domain([selected[1][1], selected[0][1]].map(yScale.invert, yScale));
       chartGroupDot.call(brush.move, null);
@@ -120,26 +125,26 @@ function dotPlot(data) {
 
   // sets the x and y scales back to their original domains and 
   // renders the data with the selected category
-  resetChart = function() {
+  let resetChart = function() {
     xScale.domain(x0);
     yScale.domain(y0);
     renderData(filterCategories());
-    selected = d3.select("#" + selectedGene);
+    selected = d3.select('#' + selectedGene);
     if (selected != null) {
       selectedPoint = selected.classed('selected', true);
     };
     transitionChart();
-  }
+  };
 
   // calls the double click function to zoom out
-  chartGroupDot.on("dblclick", resetChart);
+  chartGroupDot.on('dblclick', resetChart);
 
-  // creates a transition of the chart to reflect the current event
+  // transisitons for the dot plot on brushing and reset interactions
   let transitionChart = function() {
     let transition = chartGroupDot.transition().duration(750);
-    chartGroupDot.select(".x.axis").transition(transition).call(xAxis);
-    chartGroupDot.select(".y.axis").transition(transition).call(yAxis);
-    chartGroupDot.selectAll("circle").transition(transition)
+    chartGroupDot.select('.x.axis').transition(transition).call(xAxis);
+    chartGroupDot.select('.y.axis').transition(transition).call(yAxis);
+    chartGroupDot.selectAll('circle').transition(transition)
       .attr('cx', d => xScale(d.LFC))
       .attr('cy', d => yScale(d.LME));
   };
@@ -147,7 +152,7 @@ function dotPlot(data) {
   // creating a brush event that calls the zoom function after the user makes a brush selection
   let brush = d3.brush()
     .extent([[0,margin.top], [width - margin.left - margin.right, height - margin.top - margin.bottom]])
-    .on("end", zoom);
+    .on('end', zoom);
 
   // Modified from https://stackoverflow.com/questions/18036836/disable-clearing-of-d3-js-brush
   // Gets the <g> the brush is created on
@@ -158,10 +163,10 @@ function dotPlot(data) {
 
   // and replace it with our custom handler that doesn't trigger when circles are the mousedown targets
   brushElement.on('mousedown.brush', function (event, d) {
-    if(event.target.nodeName !== "circle"){
+    if(event.target.nodeName !== 'circle'){
       oldMousedown.call(brushElement.node(), event);
     }
-  })
+  });
 
   // creating a div container to hold the tool tips
   let tooltip = d3.select('#dot-holder')
@@ -171,17 +176,17 @@ function dotPlot(data) {
   // defines function for click event that colors the selected point green, 
   // returns the previous point to its assigned color, and
   // passes the data for the selected point to the line chart and heat map
-  let click = function(event, d){
-      if (getComputedStyle(this).opacity == 0) {
-        return;
-      };
-      if (selectedPoint != null) {
-        selectedPoint.classed('selected', false);
-      };
-      selectedPoint = d3.select(this).classed('selected', true);
-      selectedGene = this.id;
-      update(this.__data__);
+  let click = function(event, d) {
+    if (getComputedStyle(this).opacity == 0) {
+      return;
     };
+    if (selectedPoint != null) {
+      selectedPoint.classed('selected', false);
+    };
+    selectedPoint = d3.select(this).classed('selected', true);
+    selectedGene = this.id;
+    update(this.__data__);
+  };
 
   // makes the tool tip visible while the mouse hovers over a point in the plot
   let mouseover = function(event, d) {
@@ -218,19 +223,21 @@ function dotPlot(data) {
         .attr('r', 3)
         .style('stroke', 'gray')
       .on('click', click)
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave);
+      .on('mouseover', mouseover)
+      .on('mousemove', mousemove)
+      .on('mouseleave', mouseleave);
   };
 
-  // creates the points on the volcano plot
+  // creates the initial points on the dot plot
   renderData(data);
 
   // function that subsets the data to only include points in the selected cluster 
   let filterCategories = function() {
+    // all genes
     if (category == 0) {
       return data;
     };
+    // genes from selected cluster
     let selectedData = [];
     for (let i = 0; i < data.length; i++) {
       gene = data[i];
@@ -241,39 +248,51 @@ function dotPlot(data) {
     return selectedData;
   };
 
+  // filters the dot plot based on the selected category
+  filterDot = function(selection) {
+    category = selection;
+    resetChart();
+  }
+
+  // selects a point based on a user search and updates the dot plot accordingly
+  selectDot = function(geneData) {
+    gene = geneData.axolotl_gene;
+    if (selectedPoint != null) {
+      selectedPoint.classed('selected', false)
+    };
+    selectedPoint = d3.select('#' + gene).classed('selected', true)
+    selectedGene = gene;
+    update(geneData);
+  }
+
   // updates the text labels for the human and axolotl gene names
   // and passes the selected data to the line chart and heat map
-  update = function(info) {
-    document.getElementById("axolotltext").innerText = "Axolotl Gene: " + info.axolotl_gene;
-    document.getElementById("humantext").innerText = "\u2003Human Gene: " + info.human_gene
-    document.getElementById("lfctext").innerText = "\u2003LFC Relative to Baseline: " + parseFloat(info.LFC).toFixed(2);
-    document.getElementById("searchmessage").innerText = "";
+  let update = function(info) {
+    document.getElementById('axolotltext').innerText = 'Axolotl Gene: ' + info.axolotl_gene;
+    document.getElementById('humantext').innerText = '\u2003Human Gene: ' + info.human_gene
+    document.getElementById('lfctext').innerText = '\u2003LFC Relative to Baseline: ' + parseFloat(info.LFC).toFixed(2);
+    document.getElementById('searchmessage').innerText = '';
     dispatcher.call('dotToLine', info.axolotl_gene, info);
     dispatcher.call('dotToHeat', info.axolotl_gene, info);
   };
 
-  // runs entirety of code to create the volcanp plot and interactivity
+  // returns the initial dot plot
   return dotPlot;
 };
 
+// dispatches dotplot events for interactivity between chats
 dotPlot.selectionDispatcher = function (_) {
   if (!arguments.length) return dispatcher;
   dispatcher = _;
-  return dotPlot;}
+  return dotPlot;
+};
 
-// calls reset chart after assigning the currrent selected gene cluster
+// applies the category selection to the dotplot
 dotPlot.filter = function(selection) {
-  category = selection;
-  resetChart();
-}
+  filterDot(selection);
+};
 
-// updates the selected point and its color and passes the current data to the update function 
+// selects the appropriate point from a user search and updates the plot accordingly
 dotPlot.select = function(geneData) {
-  gene = geneData.axolotl_gene;
-  if (selectedPoint != null) {
-    selectedPoint.classed('selected', false)
-  }
-  selectedPoint = d3.select('#' + gene).classed('selected', true)
-  selectedGene = gene;
-  update(geneData);
-}
+  selectDot(geneData);
+};

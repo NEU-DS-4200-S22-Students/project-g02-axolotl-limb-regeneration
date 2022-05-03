@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 
 <!-- Metadata -->
 
 <head>
-  <meta charset='utf-8'>
+  <meta charset="utf-8">
 
   <!-- Title -->
   <title>G02: Alxolotl Limb Regeneration, DS 4200 S22</title>
 
   <!-- CSS Styling -->
-  <link rel='stylesheet' href='style.css'>
+  <link rel="stylesheet" href="style.css">
 
   <!-- Favicons -->
-  <link rel='apple-touch-icon' sizes='180x180' href='favicons/apple-touch-icon.png'>
-  <link rel='icon' type='image/png' sizes='32x32' href='favicons/favicon-32x32.png'>
-  <link rel='icon' type='image/png' sizes='16x16' href='favicons/favicon-16x16.png'>
-  <link rel='manifest' href='favicons/site.webmanifest'>
-  <link rel='shortcut icon' href='favicons/favicon.ico'>
-  <meta name='msapplication-TileColor' content='#da532c'>
-  <meta name='msapplication-config' content='favicons/browserconfig.xml'>
-  <meta name='theme-color' content='#ffffff'>
+  <link rel="apple-touch-icon" sizes="180x180" href="favicons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="manifest" href="favicons/site.webmanifest">
+  <link rel="shortcut icon" href="favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="msapplication-config" content="favicons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 <!-- Main page content -->
@@ -28,19 +28,19 @@
 <body>
 
   <!-- GitHub repo URL -->
-  <span id='forkongithub'><a href='https://github.com/NEU-DS-4200-S22-Students/project-g02-axolotl-limb-regeneration'>Fork me on GitHub</a></span>
+  <span id="forkongithub"><a href="https://github.com/NEU-DS-4200-S22-Students/project-g02-axolotl-limb-regeneration">Fork me on GitHub</a></span>
 
   <!-- Writeup -->
-  <div class='content-column'>
+  <div class="content-column">
     <h1>Project Group 02 Axolotl Limb Regeneration, DS 4200 S22</h1>
 
     <p><strong>Brian Huntley</strong>, <strong>Elliot Bangerter</strong>, <strong>Kelly Phalen</strong></p>
 
     <p>Service-Learning Course Project as part of
-      <a href='https://neu-ds-4200-s22.github.io/'>Ds 4200 S22 Information Presentation & Visualization</a>,
-      taught by <a href='https://cody.khoury.northeastern.edu/'>Prof. Cody Dunne</a>,
-      <a href='https://visualization.khoury.northeastern.edu/'>Data Visualization @ Khoury</a>,
-      <a href='https://www.khoury.northeastern.edu/'>Northeastern University</a>.
+      <a href="https://neu-ds-4200-s22.github.io/">Ds 4200 S22 Information Presentation & Visualization</a>,
+      taught by <a href="https://cody.khoury.northeastern.edu/">Prof. Cody Dunne</a>,
+      <a href="https://visualization.khoury.northeastern.edu/">Data Visualization @ Khoury</a>,
+      <a href="https://www.khoury.northeastern.edu/">Northeastern University</a>.
     </p>
 
 
@@ -88,11 +88,11 @@
       <br>
       The heatmap is created by selecting a few different genes from the dot plot. Upon multiple selections of genes, the heatmap 
       grows to include the relations of all of those genes. The human gene is displayed on the left side of the heatmap and the 
-      bottom displays the days since amputation. A gene of the heatmap can be removed by clicking on any box in that gene's row. 
+      bottom displays the days since amputation. A gene of the heatmap can be removed by clicking on any box in that gene"s row. 
       Additionally, the heatmap can be reset by clicking the reset heatmap button located under the search bar. 
       <br>
       <br>
-      <a href= 'https://docs.google.com/presentation/d/1BjXGGaaLlynSgMfM3ltzdbWXBUme3062U0sz5iJNooQ/edit?usp=sharing'>
+      <a href= "https://docs.google.com/presentation/d/1BjXGGaaLlynSgMfM3ltzdbWXBUme3062U0sz5iJNooQ/edit?usp=sharing">
       Axolotl Limb Regeneration Presentation</a>
     </p>
 
@@ -102,7 +102,7 @@
 
   <!-- Drop down menu --> 
   <div class="dropdown">
-    <select class="button" id='categoryButton'>
+    <select class="button" id="categoryButton">
       <option value="0">All Genes</option>
       <option value="1">Cluster 1</option>
       <option value="2">Cluster 2</option>
@@ -112,7 +112,7 @@
       <option value="6">Cluster 6</option>
     </select>
     &emsp;Cluster Expression Trend: 
-    <svg id='controls' width="720" height="55">
+    <svg id=trend" width="720" height="55">
       <text x="285" y="15" font-size="15">Days Since Amputation</text>
       <image href="img/allgenes.png" width = "700" height = "15" x = 10 y = 40 preserveAspectRatio="none" id="expression"></image>
     </svg>
@@ -121,42 +121,42 @@
   </div>
   
   <!-- Visualization goes here -->
-  <div class='vis-holder' id='dot-holder'>
-    <svg id='dot' preserveAspectRatio='xMidYMid meet' viewBox="0 0 1000 400" class='vis-svg'></svg>
+  <div class="vis-holder" id="dot-holder">
+    <svg id="dot" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 400" class="vis-svg"></svg>
   </div>
-  <div class='vis-holder'>
-    <svg id='line' preserveAspectRatio='xMidYMid meet' viewBox="0 0 700 350" class='line-svg'></svg>
-    <div class='search-tools'>
+  <div class="vis-holder">
+    <svg id="line" preserveAspectRatio="xMidYMid meet" viewBox="0 0 700 350" class="line-svg"></svg>
+    <div class="search-tools">
       <h2 id="axolotltext">
         Axolotl Gene:
       </h2>
       <p id="humantext">&emsp;Human Gene:</p>
       <p id="lfctext">&emsp;LFC Relative to Baseline:</p>
-      <input class='button' id="axolotlsearch" type="text" size = 25 placeholder="Axoltol gene (ex. axo06854-f_at)">
-      <button class='button' id="axolotlselect" type="submit">Search</button><br>
+      <input class="button" id="axolotlsearch" type="text" size = 25 placeholder="Axoltol gene (ex. axo06854-f_at)">
+      <button class="button" id="axolotlselect" type="submit">Search</button><br>
       <p id="searchmessage"></p>
-      <button class='button' id="reset-heat">Reset Heatmap</button>
+      <button class="button" id="reset-heat">Reset Heatmap</button>
     </div>
   </div>
   <h3>Heatmap of Gene Expression</h3>
-  <div class='vis-holder' id='heat-holder'>
-    <svg id='heat' preserveAspectRatio='xMidYMid meet' viewBox="0 0 1000 450" class='vis-svg'></svg>
+  <div class="vis-holder" id="heat-holder">
+    <svg id="heat" preserveAspectRatio="xMidYMid meet" viewBox="0 0 1000 450" class="vis-svg"></svg>
   </div>
   
 
   <!-- Further writeup -->
-  <div class='content-column'>
+  <div class="content-column">
 
     
 
     <h1>Demo Video</h1>
 
-    <p>Embed an MP4 demo video using the HTML5 &lt;video&gt; tag. For example, this screen recording Prof. Cody Dunne made of Mike Bostock's flexible transitions in D3 slide:</p>
+    <p>Embed an MP4 demo video using the HTML5 &lt;video&gt; tag. For example, this screen recording Prof. Cody Dunne made of Mike Bostock"s flexible transitions in D3 slide:</p>
 
-    <video controls width='100%'>
-      <source src='files/demo_screen_recording.mp4' type='video/mp4'>
-      <p>Your browser doesn't support HTML5 video. Here is
-        a <a href='files/demo_screen_recording.mp4'>link to the video</a> instead.</p>
+    <video controls width="100%">
+      <source src="files/demo_screen_recording.mp4" type="video/mp4">
+      <p>Your browser doesn"t support HTML5 video. Here is
+        a <a href="files/demo_screen_recording.mp4">link to the video</a> instead.</p>
     </video>
 
     <h1>Acknowledgments</h1>
@@ -166,40 +166,40 @@
     </p>
 
     <ul>
-      <li><a href='https://d3js.org/'>
+      <li><a href="https://d3js.org/">
           D3: Data-Driven Documents</a>
         by Mike Bostock is used for manipulating the DOM to create visualizations.
       </li>
-      <li><a href='https://codepo8.github.io/css-fork-on-github-ribbon/#'>
-          Pure CSS responsive 'Fork me on GitHub' ribbon</a>
+      <li><a href="https://codepo8.github.io/css-fork-on-github-ribbon/#">
+          Pure CSS responsive "Fork me on GitHub" ribbon</a>
         by Chris Heilmann is used to create the banner that links back to the source code repository.
       </li>
-      <li><a href='https://github.com/d3/d3-scale-chromatic/blob/v3.0.0/README.md#sequential-single-hue'>
+      <li><a href="https://github.com/d3/d3-scale-chromatic/blob/v3.0.0/README.md#sequential-single-hue">
           D3: Scale Chromatic</a>
         by Mike Bostock was used for deciding a color scale and implementing it see dotPlot.js line 32. 
       </li>
-      <li><a href='https://gist.github.com/bryanhanson/11344247'>
+      <li><a href="https://gist.github.com/bryanhanson/11344247">
           Simple D3 Line</a>
         by Bryan Hanson was used as a model to create our line chart using two arrays. 
       </li>
-      <li><a href='https://jonsadka.com/blog/how-to-create-live-updating-and-flexible-d3-line-charts-using-pseudo-data'>
+      <li><a href="https://jonsadka.com/blog/how-to-create-live-updating-and-flexible-d3-line-charts-using-pseudo-data">
           Live Updating and Flexible D3 Linecharts</a>
         by Jon Sadka was used to learn about creating transitions between lines.
       </li>
-      <li><a href='https://d3-graph-gallery.com/graph/interactivity_brush.html'>
+      <li><a href="https://d3-graph-gallery.com/graph/interactivity_brush.html">
         D3 Graph Gallery: Brushing </a>
       was used to learn how to zoom in when brushing. 
       </li>
-      <li><a href='https://bl.ocks.org/mbostock/f48fcdb929a620ed97877e4678ab15e6'>
+      <li><a href="https://bl.ocks.org/mbostock/f48fcdb929a620ed97877e4678ab15e6">
         Brush & Zoom II </a>
       by Mike Bostock was used to learn how to zoom in when brushing. 
       </li>
-      <li><a href = 'https://www.w3schools.com/howto/howto_css_dropdown.asp'>
+      <li><a href = "https://www.w3schools.com/howto/howto_css_dropdown.asp">
         How To- Hoverable Dropdown </a> 
       by W3 Schools was used as a model for a dropdown menu. 
       </li>
 
-      <li><a href = 'https://bl.ocks.org/mthh/0e8fce303def3d2bf6603ad017369032'>
+      <li><a href = "https://bl.ocks.org/mthh/0e8fce303def3d2bf6603ad017369032">
         Scatterplot with grid, tooltip and filter </a> 
       by Matthieu Viry was used to learn how to filter a scatterplot based on a selection. 
       </li>
@@ -208,11 +208,11 @@
   </div>
 
   <!-- Scripts at the end avoid need for dealing with async, defer, or onload event handlers -->
-  <script src='lib/d3.v7.3.0/d3.js'></script>
-  <script src='js/dotPlot.js'></script>
-  <script src='js/lineChart.js'></script>
-  <script src='js/heatmap.js'></script>
-  <script src='js/visualization.js'></script>
+  <script src="lib/d3.v7.3.0/d3.js"></script>
+  <script src="js/dotPlot.js"></script>
+  <script src="js/lineChart.js"></script>
+  <script src="js/heatmap.js"></script>
+  <script src="js/visualization.js"></script>
 </body>
 
 </html>

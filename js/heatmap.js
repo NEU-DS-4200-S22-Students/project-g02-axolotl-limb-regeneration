@@ -4,6 +4,7 @@ let currentData = [], renderHeat;
 
 // function that creates the heatmap 
 function heatmap(data) {
+  // defines margins and arrays of axis labels
   let margin = {top: 0, left: 180, right: 0, bottom: 40},
   width = 700,
   height = 400,
@@ -53,18 +54,20 @@ function heatmap(data) {
     .append('div')
     .classed('tooltip', true);
 
-  // Three functions that change the tooltip when user hover / move / leave a cell
+  // updates the tooltip on mouse over
   let mouseover = function(_) {
     tooltip.style('opacity', 1);
     d3.select(this).style('stroke', 'black');
   };
 
+  // updates the tooltip on mouse move
   let mousemove = function(event, d) {
     tooltip.html('The LFC of ' + d.y + ' on ' + d.x + ' is: ' + d.z.toFixed(2) + '<br>Click to remove this gene')
       .style('left', (event.pageX + 10) + 'px')
       .style('top', (event.pageY + 25) + 'px');
   };
 
+  // updates the tooltip on mouse leave
   let mouseleave = function(_) {
     tooltip.style('opacity', 0);
     d3.select(this).style('stroke', 'none');
@@ -141,7 +144,7 @@ function heatmap(data) {
       .on("click", click);
   };
 
-  // executes entire code above for rendering the chart elements and adding interactivity
+  // returns the initial heatmap
   return heatmap;
 };
 
@@ -149,7 +152,7 @@ function heatmap(data) {
 heatmap.reset = function() {
   currentData = [];
   renderHeat(currentData);
-} ;
+};
 
 // adds a new selected gene from the volcano plot if it is not included already
 heatmap.updateSelection = function (selectedData) {
