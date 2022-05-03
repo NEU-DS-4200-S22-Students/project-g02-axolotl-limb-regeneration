@@ -1,5 +1,4 @@
-# Project Template
+# Axolotl Limb Regeneration 
+The focus of this project is on the change of gene expression levels throughout the regeneration process of a salamander limb. We have acquired a dataset from James Monaghan containing gene expression levels from 20,000 genes during the regeneration of axolotl limbs. The motivation behind this project is to create an interactive and queryable visualization that is easily digestive and  demonstrates significant trends in changes in gene expression. We hope to make the data and information from James Monaghan’s studies easier to understand to progress the fields of animal homeostasis and regenerative medicine. Current visualizations for this data can be difficult to comprehend and explore since they are basic and lack a web-based or interactive component. We hope to aid scientists in their findings to further the knowledge about regenerative genes.
 
-This repository is your starting point for your project code. See the project instructions on the course website.
-
-Link to your GitHub pages website: <https://neu-ds-4200-s22-students.github.io/project-g02-axolotl-limb-regeneration/>
+Link to GitHub pages website: <https://neu-ds-4200-s22-students.github.io/project-g02-axolotl-limb-regeneration/>
